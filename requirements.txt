@@ -1,0 +1,6 @@
+lxml
+requests
+Flask
+flask_babel
+pyyaml
+requests_oauthlib

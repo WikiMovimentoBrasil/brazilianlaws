@@ -1,0 +1,297 @@
+{% extends "base.html" %}
+
+{% block navbar %}
+    {% with lang=lang, username=username %}
+        {% include 'topnavbar.html' %}
+    {% endwith %}
+{% endblock %}
+
+{% block title %}{{ _("Create_item") }}{% endblock %}
+{% block banner %}{% endblock %}
+
+{% block content %}
+    <div class="w3-row" style="margin-top: 30px">
+        <div class="w3-container w3-twothird">
+            <table class="table table-responsive table-striped"
+                   style="overflow-wrap: break-word;font-size: 125%; width: 100%; table-layout: fixed; overflow-wrap: break-word;">
+                <tr>
+                    <th>{{ _("Title") }}</th>
+                    <td>{{ title }}</td>
+                </tr>
+                <tr>
+                    <th style="white-space: nowrap">{{ _("Document type") }}</th>
+                    <td>
+                        {% for item_tipoDocumento in tipoDocumento %}
+                            {% if item_tipoDocumento.wikidatified %}
+                                <a target="_blank" title="{{ item_tipoDocumento.label }}"
+                                   href="https://www.wikidata.org/wiki/{{ item_tipoDocumento.qid }}">
+                                    {{ item_tipoDocumento.label }}
+                                </a>
+                            {% else %}
+                                <a target="_blank" title="{{ item_tipoDocumento.label }}" style="color: red"
+                                   data-toggle="modal"
+                                   data-label="{{ item_tipoDocumento.label }}"
+                                   data-search_class="type"
+                                   data-target="{% if username %}#addModal{% else %}#authenticate{% endif %}">
+                                    {{ item_tipoDocumento.label }} <sup>{{ _("Reconcile") }}</sup>
+                                </a>
+                            {% endif %}
+                            <br>
+                        {% endfor %}
+                    </td>
+                </tr>
+                <tr>
+                    <th>{{ _("Date") }}</th>
+                    <td>{{ date }}</td>
+                </tr>
+                <tr>
+                    <th>{{ _("URN") }}</th>
+                    <td style="word-wrap: anywhere">{{ urn }}</td>
+                </tr>
+                <tr>
+                    <th>{{ _("Locality") }}</th>
+                    <td>
+                        {% for item_localidade in localidade %}
+                            {% if item_localidade.wikidatified %}
+                                <a target="_blank" title="{{ item_localidade.label }}"
+                                   href="https://www.wikidata.org/wiki/{{ item_localidade.qid }}">
+                                    {{ item_localidade.label }}
+                                </a>
+                            {% else %}
+                                <a target="_blank" title="{{ item_localidade.label }}" style="color: red"
+                                   data-toggle="modal"
+                                   data-label="{{ item_localidade.label }}"
+                                   data-search_class="locality"
+                                   data-target="{% if username %}#addModal{% else %}#authenticate{% endif %}">
+                                    {{ item_localidade.label }} <sup>{{ _("Reconcile") }}</sup>
+                                </a>
+                            {% endif %}
+                            <br>
+                        {% endfor %}
+                    </td>
+                </tr>
+                <tr>
+                    <th>{{ _("Authority") }}</th>
+                    <td>
+                        {% for item_autoridade in autoridade %}
+                            {% if item_autoridade.wikidatified %}
+                                <a target="_blank" title="{{ item_autoridade.label }}"
+                                   href="https://www.wikidata.org/wiki/{{ item_autoridade.qid }}">
+                                    {{ item_autoridade.label }}
+                                </a>
+                            {% else %}
+                                <a target="_blank" title="{{ item_autoridade.label }}" style="color: red"
+                                   data-toggle="modal"
+                                   data-label="{{ item_autoridade.label }}"
+                                   data-search_class="authority"
+                                   data-target="{% if username %}#addModal{% else %}#authenticate{% endif %}">
+                                    {{ item_autoridade.label }} <sup>{{ _("Reconcile") }}</sup>
+                                </a>
+                            {% endif %}
+                            <br>
+                        {% endfor %}
+                    </td>
+                </tr>
+                <tr>
+                    <th>{{ _("Subject") }}</th>
+                    <td>
+                        {% for item_subject in subject %}
+                            {% if item_subject.wikidatified %}
+                                <a target="_blank" title="{{ item_subject.label }}"
+                                   href="https://www.wikidata.org/wiki/{{ item_subject.qid }}">
+                                    {{ item_subject.label }}
+                                </a>
+                            {% else %}
+                                <a target="_blank" title="{{ item_subject.label }}" style="color: red"
+                                   data-toggle="modal"
+                                   data-label="{{ item_subject.label }}"
+                                   data-search_class="subject"
+                                   data-target="{% if username %}#addModal{% else %}#authenticate{% endif %}">
+                                    {{ item_subject.label }} <sup>{{ _("Reconcile") }}</sup>
+                                </a>
+                            {% endif %}
+                            <br>
+                        {% endfor %}
+                    </td>
+                </tr>
+                <tr>
+                    <th>{{ _("Digest") }}</th>
+                    <td>
+                        <div style="overflow: auto">{{ description }}</div>
+                    </td>
+                </tr>
+            </table>
+            {% if qs %}
+                <a target="_blank" href="https://quickstatements.toolforge.org/#/v1={{ qs }}">
+                    <button class="btn btn-primary" style="font-size:115%; width:100%; background-color: #029c36">
+                        {{ _("UPLOAD TO WIKIDATA") }}
+                    </button>
+                </a>
+            {% endif %}
+        </div>
+        <div class="w3-container w3-third" style="font-size: 125%">
+            {% if not qid %}
+                {{ _("This item doesn't exists yet in Wikidata.") }}<br><br>
+            {% else %}
+                {{ _("This item <a target='_blank' href='https://www.wikidata.org/wiki/%(qid)s' title='Item already exists'>already exists in Wikidata.</a>", qid=qid) }}
+                <br><br>
+                {{ _("Use <b>{{Cite Q|%(qid)s}}</b> to cite this item as reference on the English Wikipedia.", qid=qid) }}
+                <br><br>
+            {% endif %}
+            {{ _("Some parameters might not be fully identified and thus will be presented in red and with a \"Reconcile\" tag at the table on the side.") }}<br><br>
+            {{ _("The parameters are presented in a mixture of <i>Quick Statements</i> and the <i>LeXML API</i> formats.") }}<br><br>
+            {{ _("To <i>wikidatify</i> the metadata, click on \"Reconcile\" and search for the entity. If you can't find it, select \"Not found/nonexistent\".") }}<br><br>
+            {{ _("To create or update an item using the Quick Statements tool, click in \"Upload to Wikidata\".") }}<br>
+        </div>
+    </div>
+    <div class="w3-container">
+        <div class="modal" id="authenticate">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title">{{ _("Authenticate") }}</h3>
+                        <button type="button" class="close" data-dismiss="modal" style="font-size:125%; ">&times;
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p style="font-size: 115%">
+                            {{ _("In order to reconcile a metadata, you need to log in.") }}<br>
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                style="font-size:125%; ">
+                            {{ _("Cancelar") }}
+                        </button>
+                        <a title="{{ _('Log in') }}"
+                           href="{{ url_for('login', next=request.script_root + request.full_path) }}">
+                            <button type="button" class="btn btn-primary"
+                                    style="font-size:125%; background-color: #029c36">
+                                {{ _("Log in") }}
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal" id="addModal">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title">{{ _("Reconciliation") }}</h3>
+                        <button type="button" class="close" data-dismiss="modal" style="font-size:125%; ">&times;
+                        </button>
+                    </div>
+                    <div class="modal-body" id="modalbody">
+                        <p style="font-size: 115%">
+                            {{ _("Search for a Wikidata entity corresponding to the term you are trying to reconcile.") }}<br>
+                            {{ _("If no corresponding Wikidata entity exists yet, please check the option") }}
+                            <i>'{{ _("Not found/nonexistent") }}'</i>
+                        </p>
+                        <br>
+                        <div id="term" style="text-align: center;font-size: 150%"></div>
+                        <br>
+                        <label for="search_field" class="col-form-label" style="font-size: 125%">
+                            {{ _("Search for terms that can represent ") }}
+                            <div id="search_class" style="font-style: italic"></div>
+                        </label>
+                        <input type="search" class="form-control" placeholder="{{ _('Search') }}" id="search_field"
+                               style="font-size: 125%">
+                        <br>
+                        <span id="select_instruction" style="font-size: 125%">{{ _("Select an option:") }}</span><br>
+                        <form id="search_results">
+                        </form>
+                    </div>
+                    <div class="modal-footer" id="secondModal">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                style="font-size:125%; ">{{ _("Cancelar") }}</button>
+                        <button type="submit" id="addstatement" class="btn btn-primary"
+                                style="font-size:125%; background-color: #029c36;border: 0px">{{ _("Adicionar declaração") }}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $('#addModal').on('show.bs.modal', function (event) {
+            var term = $(event.relatedTarget).attr('data-label');
+            var search_class = $(event.relatedTarget).attr('data-search_class');
+            $(this).find("#secondModal #addstatement").attr('data-label', term);
+            $(this).find("#secondModal #addstatement").attr('data-search_class', search_class);
+            $(this).find("#modalbody #term").text(term);
+            $(this).find("#modalbody #search_class").text(term);
+        })
+
+        $("#search_field").bind('keyup', function (event) {
+            var unknown = "{{ _('Not found/nonexistent') }}";
+            var search_class = $('#addstatement').attr('data-search_class');
+            var term = $('#addstatement').attr('data-label');
+            if ($(this)[0].value) {
+                search();
+            } else {
+                $("#search_results").empty();
+                $("#search_results").append('<input type="radio" id="unknown" name="claim_option" data-label="' + term + '" data-search_class="' + search_class + '" value="unknown"> ' +
+                    '<label for="unknown" style="font-size: 125%"><i>' + unknown + '</i></label><br>');
+            }
+        });
+
+        function search() {
+            var input = $('#search_field')[0].value;
+            var search_class = $('#addstatement').attr('data-search_class');
+            var term = $('#addstatement').attr('data-label');
+            var data = {'term': input};
+
+            console.log(input);
+            $.ajax({
+                url: "/search",
+                type: "POST",
+                data: JSON.stringify(data),
+                contentType: "application/json",
+                dataType: "json",
+
+                success: function (response) {
+                    var unknown = "{{ _('Not found/nonexistent') }}";
+                    $("#search_results").empty()
+
+                    $("#search_results").append('<input type="radio" id="unknown" name="claim_option" data-label="' + term + '" data-search_class="' + search_class + '" value="unknown"> ' +
+                        '<label for="unknown" style="font-size: 125%"><i>' + unknown + '</i></label><br>');
+
+                    for (var i = 0; i < (Math.min(15, response.length)); i++) {
+                        $("#search_results").append('<input type="radio" id="' + response[i]["qid"] + '" name="claim_option" data-label="' + term + '" data-search_class="' + search_class + '" value="' + response[i]["qid"] + '"> ' +
+                            '<label for="' + response[i]["qid"] + '" style="font-size: 125%"><b style="color: 029c36;font-size: 125%">' + response[i]["label"] + ' (' + response[i]["qid"] + ')</b></label>: ' + response[i]["descr"] + '<br>');
+                    }
+                },
+                error: function () {
+                    alert('{{_("Select one element")}}');
+                }
+            });
+        };
+
+        $('#addstatement').on('click', function () {
+            var claim = $("input[name='claim_option']:checked").val();
+            var category = $("input[name='claim_option']:checked").attr('data-search_class');
+            var term = $("input[name='claim_option']:checked").attr('data-label');
+            var data = {
+                'term': term,
+                'category': category,
+                'qid': claim,
+            }
+            $.ajax({
+                url: "/add_stat",
+                type: "POST",
+                data: JSON.stringify(data),
+                contentType: "application/json",
+                dataType: "json",
+
+                success: function () {
+                    alert("{{ _('Declaração inserida com sucesso!') }}");
+                    window.location.reload();
+                    $('#addModal').modal('hide');
+                },
+                error: function () {
+                    alert("Ocorreu algum erro!");
+                }
+            });
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block navbar %}
+    {% with lang=lang, username=username %}
+        {% include 'topnavbar.html' %}
+    {% endwith %}
+{% endblock %}
+
+{% block title %}{{ _("Reconciliate") }}{% endblock %}
+
+{% block content %}
+    <div class="w3-row" style="text-align:center; padding-bottom:30px;">
+        <div class="w3-container w3-quarter"></div>
+        <div class="w3-container w3-half">
+            <h2>{{ _("Select one of the categories of metadata to reconciliate unknown or nonexistent values.") }}</h2>
+        </div>
+    </div>
+    <div class="w3-row" style="margin-top: 30px">
+        <div class="w3-container w3-quarter"></div>
+        <div class="w3-container w3-half">
+            <a href="{{ url_for('reconciliate_category', cat='authority') }}">
+                <button type="button" class="btn btn-primary"
+                        style="font-size:150%; background-color: #029c36;border: 0px; width: 100%">{{ _("Authority") }}</button>
+            </a>
+            <br>
+            <a href="{{ url_for('reconciliate_category', cat='locality') }}">
+                <button type="button" class="btn btn-primary"
+                        style="font-size:150%; background-color: #029c36;border: 0px; width: 100%">{{ _("Locality") }}</button>
+            </a>
+            <br>
+            <a href="{{ url_for('reconciliate_category', cat='type') }}">
+                <button type="button" class="btn btn-primary"
+                        style="font-size:150%; background-color: #029c36;border: 0px; width: 100%">{{ _("Document type") }}</button>
+            </a>
+            <br>
+            <a href="{{ url_for('reconciliate_category', cat='subject') }}">
+                <button type="button" class="btn btn-primary"
+                        style="font-size:150%; background-color: #029c36;border: 0px; width: 100%">{{ _("Subject") }}</button>
+            </a>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block navbar %}
+    {% with lang=lang, username=username %}
+        {% include 'topnavbar.html' %}
+    {% endwith %}
+{% endblock %}
+
+{% block title %}{{ _("Homepage") }}{% endblock %}
+
+{% block content %}
+    <div class="w3-container w3-quarter"></div>
+    <div class="w3-container w3-half">
+        <h2 style="text-align:center; padding-bottom:30px;">
+            {{ _("Welcome to the <i>WikiProject Brazilian Laws Legislation Importer</i>")}}
+        </h2>
+        <h3 style="text-align:center; padding-bottom:30px;">
+            {{_("This application was developed to facilitate the process of importing metadata of Brazilian legislation into <b><i>Wikidata</i></b>.")}}
+        </h3>
+        <form id="form_url" action="{{ url_for('create_item_based_in_url') }}" method=post>
+            <h4 style="text-align:center">
+                <label for="url">{{ _("You can create a new legislation item by inserting a <i>LeXML</i> or <i>Palácio do Planalto</i> URL into the field bellow:") }}</label>
+            </h4>
+            <input id="url" type="url" name="url" class="form-control" placeholder="{{ _('Paste the URL') }}">
+            <input type="submit" class="btn btn-primary" style="font-size:115%; width:100%; background-color: #029c36" value = {{ _('Submit') }}>
+        </form>
+    </div>
+{% endblock %}
