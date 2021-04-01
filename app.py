@@ -256,18 +256,17 @@ def check_lexml_url(url):
 def check_if_already_exists(lexml_id):
     query_result = check_lexml_id_in_wikidata(lexml_id)
 
+    item_law = Law(qid='')
     if len(query_result) > 0:
         if "subject" in query_result[0]:
             query_result[0]["subject"]["value"] = query_result[0]["subject"]["value"].split(";")
-
-        item_law = Law()
 
         for key in query_result[0].keys():
             setattr(item_law, key, query_result[0][key]["value"])
 
         return True, item_law
     else:
-        return False, None
+        return False, item_law
 
 
 @app.route('/add_stat', methods=['GET', 'POST'])
