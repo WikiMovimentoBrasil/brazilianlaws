@@ -125,7 +125,7 @@ class Law:
               build_qs_command_qid(wikidatify_list(self.facet_tipoDocumento, 'type.json'), 'P31') +
               build_qs_command_qid(wikidatify_list(self.facet_localidade, 'locality.json'), 'P1001') +
               build_qs_command_qid(wikidatify_list(self.facet_autoridade, 'authority.json'), 'P790') +
-              build_qs_command_qid(wikidatify_list(self.subject, 'subject.json'), 'P921') +
+              build_qs_command_qid(wikidatify_list(self.subject, 'subject.json'), 'P921', False) +
               build_qs_command_qid(self.country, 'P17') +
               build_qs_command_qid(self.lang, 'P407') +
               build_qs_command_qid(self.wikiproject, 'P5008') +
@@ -211,12 +211,16 @@ def _date(value):
     return "+" + value + "T00:00:00Z/11"
 
 
-def build_qs_command_qid(parts, prop):
+def build_qs_command_qid(parts, prop, ref=True):
     result = []
     today = datetime.today().strftime('+%Y-%m-%dT00:00:00Z/11')
+    if ref:
+        reference = '|S248|Q10317762|S813|' + today
+    else:
+        reference = ''
     for item in parts:
         if item["wikidatified"]:
-            result.append(quote('||LAST|' + prop + '|' + item["qid"] + '|S248|Q10317762|S813|' + today, safe=''))
+            result.append(quote('||LAST|' + prop + '|' + item["qid"] + reference, safe=''))
     return "".join(result)
 
 
