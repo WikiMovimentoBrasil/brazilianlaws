@@ -287,7 +287,8 @@ def add_statement():
 
             with open(os.path.join(app.static_folder, "unknown.json"), encoding="utf-8") as file:
                 lexicon_unk = json.load(file)
-                lexicon_unk[data['category'].lower()].remove(term)
+                if term in lexicon_unk[data['category'].lower()]:
+                    lexicon_unk[data['category'].lower()].remove(term)
             with open(os.path.join(app.static_folder, "unknown.json"), 'w', encoding="utf-8") as file:
                 json.dump(lexicon_unk, file, ensure_ascii=False)
         else:
