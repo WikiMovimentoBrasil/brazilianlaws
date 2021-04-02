@@ -1,0 +1,304 @@
+# Portuguese translations for .
+# Copyright (C) 2021 ORGANIZATION
+# This file is distributed under the same license as the  project.
+# Éder Porto <eder.porto@wmnobrasil.org>, 2021.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version:  1.0\n"
+"Report-Msgid-Bugs-To: eder.porto@wmnobrasil.com\n"
+"POT-Creation-Date: 2021-04-01 20:43-0300\n"
+"PO-Revision-Date: 2021-04-01 20:43-0300\n"
+"Last-Translator: Éder Porto <eder.porto@wmnobrasil.com>\n"
+"Language: pt\n"
+"Language-Team: pt <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.0\n"
+
+#: templates/authority.html:9 templates/authority.html:14
+#: templates/create.html:74 templates/reconciliate.html:23
+#: templates/unknown.html:74
+msgid "Authority"
+msgstr "Autoridade"
+
+#: templates/authority.html:29 templates/create.html:36
+#: templates/create.html:66 templates/create.html:88 templates/create.html:110
+#: templates/locality.html:29 templates/subject.html:29 templates/type.html:29
+#: templates/unknown.html:36 templates/unknown.html:66
+#: templates/unknown.html:88 templates/unknown.html:110
+msgid "Reconcile"
+msgstr "Reconciliar"
+
+#: templates/authority.html:41 templates/create.html:181
+#: templates/locality.html:41 templates/subject.html:41 templates/type.html:41
+#: templates/unknown.html:133
+msgid "Reconciliation"
+msgstr "Reconciliação"
+
+#: templates/authority.html:46 templates/create.html:187
+#: templates/locality.html:47 templates/subject.html:46 templates/type.html:46
+#: templates/unknown.html:138
+msgid ""
+"Search for a Wikidata entity corresponding to the term you are trying to "
+"reconcile."
+msgstr ""
+"Procure uma entidade Wikidata correspondente ao termo que você está "
+"tentando reconciliar."
+
+#: templates/authority.html:47 templates/create.html:188
+#: templates/locality.html:48 templates/subject.html:47 templates/type.html:47
+#: templates/unknown.html:139
+msgid "If no corresponding Wikidata entity exists yet, please check the option"
+msgstr "Se nenhuma entidade Wikidata correspondente existir ainda, marque a opção"
+
+#: templates/authority.html:48 templates/authority.html:84
+#: templates/authority.html:111 templates/create.html:189
+#: templates/create.html:226 templates/create.html:253
+#: templates/locality.html:49 templates/locality.html:85
+#: templates/locality.html:112 templates/subject.html:48
+#: templates/subject.html:84 templates/subject.html:111 templates/type.html:48
+#: templates/type.html:84 templates/type.html:111 templates/unknown.html:140
+#: templates/unknown.html:176 templates/unknown.html:203
+msgid "Not found/nonexistent"
+msgstr "Não encontrado/não existente"
+
+#: templates/authority.html:54 templates/create.html:195
+#: templates/locality.html:55 templates/subject.html:54 templates/type.html:54
+#: templates/unknown.html:146
+msgid "Search for terms that can represent "
+msgstr "Procure por termos que podem representar "
+
+#: templates/authority.html:57 templates/create.html:198
+#: templates/locality.html:58 templates/subject.html:57 templates/type.html:57
+#: templates/unknown.html:149
+msgid "Search"
+msgstr "Procure"
+
+#: templates/authority.html:60 templates/create.html:201
+#: templates/locality.html:61 templates/subject.html:60 templates/type.html:60
+#: templates/unknown.html:152
+msgid "Select an option:"
+msgstr "Selecione uma opção:"
+
+#: templates/authority.html:66 templates/create.html:164
+#: templates/create.html:207 templates/locality.html:67
+#: templates/subject.html:66 templates/type.html:66 templates/unknown.html:158
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: templates/authority.html:68 templates/create.html:209
+#: templates/locality.html:69 templates/subject.html:68 templates/type.html:68
+#: templates/unknown.html:160
+msgid "Add statement"
+msgstr "Adicionar declaração"
+
+#: templates/authority.html:123 templates/create.html:265
+#: templates/locality.html:124 templates/subject.html:123
+#: templates/type.html:123 templates/unknown.html:215
+msgid "Select one element"
+msgstr "Selecione um elemento"
+
+#: templates/authority.html:145 templates/create.html:287
+#: templates/locality.html:146 templates/subject.html:145
+#: templates/type.html:145 templates/unknown.html:237
+msgid "Statement inserted successfully!"
+msgstr "Declaração inserida com sucesso!"
+
+#: templates/base.html:20 templates/home.html:9 templates/topnavbar.html:2
+msgid "Homepage"
+msgstr "Página inicial"
+
+#: templates/base.html:20 templates/base.html:53
+msgid "WikiProject Brazilian Laws"
+msgstr "WikiProjeto Leis Brasileiras"
+
+#: templates/base.html:40 templates/base.html:42
+msgid "Logotipo WikiProject Brazilian Laws"
+msgstr "Logotipo WikiProjeto Leis Brasileiras"
+
+#: templates/base.html:53
+msgid "WikiProject Brazilian Laws project"
+msgstr "projeto WikiProjeto Leis Brasileiras"
+
+#: templates/base.html:54
+#, python-format
+msgid ""
+"<i>WikiProject Brazilian Laws Legislation Importer</i> is an application "
+"developed in the context of the  <i><b>%(projeto)s</b></i> in Wikidata, "
+"with support of <b>WikiCite</b>."
+msgstr ""
+"<i>Importador de Legislação do WikiProjeto Leis Brasileiras</i> é um "
+"aplicativo desenvolvido no contexto dos <i><b>%(projeto)s</b></i> no "
+"Wikidata, com suporte do <b>WikiCite</b>."
+
+#: templates/create.html:9
+msgid "Create item"
+msgstr "Criar item"
+
+#: templates/create.html:18 templates/unknown.html:18
+msgid "Title"
+msgstr "Título"
+
+#: templates/create.html:22 templates/reconciliate.html:33
+#: templates/type.html:14 templates/unknown.html:22
+msgid "Document type"
+msgstr "Tipo de documento"
+
+#: templates/create.html:44 templates/unknown.html:44
+msgid "Date"
+msgstr "Data"
+
+#: templates/create.html:48 templates/unknown.html:48
+msgid "URN"
+msgstr "URN"
+
+#: templates/create.html:52 templates/locality.html:9
+#: templates/locality.html:14 templates/reconciliate.html:28
+#: templates/unknown.html:52
+msgid "Locality"
+msgstr "Localidade"
+
+#: templates/create.html:96 templates/reconciliate.html:38
+#: templates/subject.html:9 templates/subject.html:14 templates/unknown.html:96
+msgid "Subject"
+msgstr "Assunto"
+
+#: templates/create.html:118
+msgid "Digest"
+msgstr "Ementa"
+
+#: templates/create.html:127
+msgid "UPLOAD TO WIKIDATA"
+msgstr "CARREGAR PARA O WIKIDATA"
+
+#: templates/create.html:134
+msgid "This item doesn't exists yet in Wikidata."
+msgstr "Este item ainda não existe no Wikidata."
+
+#: templates/create.html:136
+#, python-format
+msgid ""
+"This item <a target='_blank' href='https://www.wikidata.org/wiki/%(qid)s'"
+" title='Item already exists'>already exists in Wikidata.</a>"
+msgstr ""
+"Este item <a target='_blank' href='https://www.wikidata.org/wiki/%(qid)s'"
+" title='Item já existe'>já existe no Wikidata.</a>"
+
+#: templates/create.html:138
+#, python-format
+msgid ""
+"Use <b>{{Cite Q|%(qid)s}}</b> to cite this item as reference on the "
+"English Wikipedia."
+msgstr ""
+"Use <b>{{Citar Q|%(qid)s}}</b> para citar este item como referência na "
+"Wikipédia em Português."
+
+#: templates/create.html:141
+msgid ""
+"Some parameters might not be fully identified and thus will be presented "
+"in red and with a \"Reconcile\" tag at the table on the side."
+msgstr ""
+"Alguns parâmetros podem não estar totalmente identificados e, portanto, "
+"serão apresentados em vermelho e com a etiqueta \"Reconciliar\" na tabela"
+" ao lado."
+
+#: templates/create.html:142
+msgid ""
+"The parameters are presented in a mixture of <i>Quick Statements</i> and "
+"the <i>LeXML API</i> formats."
+msgstr ""
+"Os parâmetros são apresentados em um misto de formato <i>Quick "
+"Statements</i> e formato da <i>API do LeXML</i>."
+
+#: templates/create.html:143
+msgid ""
+"To <i>wikidatify</i> the metadata, click on \"Reconcile\" and search for "
+"the entity. If you can't find it, select \"Not found/nonexistent\"."
+msgstr ""
+"Para <i>wikidatificar</i> os metadados, clique em \"Reconciliar\" e "
+"procure pela entidade. Se você não conseguir encontrá-la, selecione \"Não"
+" encontrado/não existente\"."
+
+#: templates/create.html:144
+msgid ""
+"To create or update an item using the Quick Statements tool, click in "
+"\"Upload to Wikidata\"."
+msgstr ""
+"Para criar ou atualizar um item usando a ferramenta Quick Statements, "
+"clique em \"Carregar para o Wikidata\"."
+
+#: templates/create.html:152
+msgid "Authenticate"
+msgstr "Autenticar"
+
+#: templates/create.html:158
+msgid "In order to reconcile a metadata, you need to log in."
+msgstr "Para reconciliar um metadado, você precisa realizar autenticar-se."
+
+#: templates/create.html:166 templates/create.html:170
+msgid "Log in"
+msgstr "Autenticar-se"
+
+#: templates/home.html:15
+msgid "Welcome to the <i>WikiProject Brazilian Laws Legislation Importer</i>"
+msgstr ""
+"Bem-vindo(a) ao <i>Importador de Legislação do WikiProjeto Leis "
+"Brasileiras</i>"
+
+#: templates/home.html:18
+msgid ""
+"This application was developed to facilitate the process of importing "
+"metadata of Brazilian legislation into <b><i>Wikidata</i></b>."
+msgstr ""
+"Esta aplicação foi desenvolvida para facilitar o processo de importação "
+"de metadados de legislações brasileiras para o <b><i>Wikidata</i></b>."
+
+#: templates/home.html:22
+msgid ""
+"You can create a new legislation item by inserting a <i><a "
+"target=\"_blank\" href=\"https://www.lexml.gov.br/\">LeXML</a></i> URL "
+"into the field bellow:"
+msgstr ""
+"Você pode criar um novo item de legislação inserindo uma URL do <i><a "
+"target=\"_blank\" href=\"https://www.lexml.gov.br/\">LeXML</a></i> no "
+"campo abaixo:"
+
+#: templates/home.html:24
+msgid "Paste the URL"
+msgstr "Cole a URL"
+
+#: templates/home.html:25
+msgid "Submit"
+msgstr "Submeter"
+
+#: templates/reconciliate.html:9 templates/topnavbar.html:3
+msgid "Reconciliate"
+msgstr "Reconciliar"
+
+#: templates/reconciliate.html:15
+msgid ""
+"Select one of the categories of metadata to reconciliate unknown or "
+"nonexistent values."
+msgstr ""
+"Selecione uma das categorias de metadados para reconciliar valores "
+"desconhecidos ou inexistentes."
+
+#: templates/topnavbar.html:16
+msgid "Menu"
+msgstr "Menu"
+
+#: templates/type.html:9
+msgid "Document Type"
+msgstr "Tipo de Documento"
+
+#: templates/unknown.html:9
+msgid "Unknown"
+msgstr "Desconhecido"
+
+#: templates/unknown.html:118
+msgid "Description"
+msgstr "Descrição"
+
