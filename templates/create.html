@@ -6,7 +6,7 @@
     {% endwith %}
 {% endblock %}
 
-{% block title %}{{ _("Create_item") }}{% endblock %}
+{% block title %}{{ _("Create item") }}{% endblock %}
 {% block banner %}{% endblock %}
 
 {% block content %}
@@ -161,7 +161,7 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal"
                                 style="font-size:125%; ">
-                            {{ _("Cancelar") }}
+                            {{ _("Cancel") }}
                         </button>
                         <a title="{{ _('Log in') }}"
                            href="{{ url_for('login', next=request.script_root + request.full_path) }}">
@@ -204,9 +204,9 @@
                     </div>
                     <div class="modal-footer" id="secondModal">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                                style="font-size:125%; ">{{ _("Cancelar") }}</button>
+                                style="font-size:125%; ">{{ _("Cancel") }}</button>
                         <button type="submit" id="addstatement" class="btn btn-primary"
-                                style="font-size:125%; background-color: #029c36;border: 0px">{{ _("Adicionar declaração") }}</button>
+                                style="font-size:125%; background-color: #029c36;border: 0px">{{ _("Add statement") }}</button>
                     </div>
                 </div>
             </div>
@@ -284,7 +284,7 @@
                 dataType: "json",
 
                 success: function () {
-                    alert("{{ _('Declaração inserida com sucesso!') }}");
+                    alert("{{ _('Statement inserted successfully!') }}");
                     window.location.reload();
                     $('#addModal').modal('hide');
                 },
