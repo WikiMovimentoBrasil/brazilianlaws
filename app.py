@@ -4,7 +4,7 @@ import re
 import json
 from flask import Flask, render_template, request, redirect, session, jsonify, g
 from flask_babel import Babel, gettext
-from api import call_api, check_lexml_id_in_wikidata, post_search_entity, Law
+from api import call_api, check_lexml_id_in_wikidata, post_search_entity, Law, call_planalto, scrap_record_planalto
 from oauth_wikidata import get_username, get_token
 from requests_oauthlib import OAuth1Session
 
@@ -15,6 +15,9 @@ app.config.update(yaml.safe_load(open(os.path.join(__dir__, 'config.yaml'))))
 BABEL = Babel(app)
 
 
+########################################################################################################################
+# LOGIN
+########################################################################################################################
 @app.before_request
 def init_profile():
     g.profiling = []
@@ -78,6 +81,9 @@ def oauth_callback():
     return redirect(next_page)
 
 
+########################################################################################################################
+# LANGUAGE
+########################################################################################################################
 @BABEL.localeselector
 def get_locale():
     """
@@ -106,6 +112,9 @@ def set_locale():
     return redirect(next_page)
 
 
+########################################################################################################################
+# PAGES
+########################################################################################################################
 @app.route('/')
 @app.route('/inicio')
 @app.route('/home')
@@ -116,6 +125,24 @@ def home():
     lang = get_locale()
     username = get_username()
     return render_template('home.html', lang=lang, username=username)
+
+
+@app.route('/planalto', methods=['POST', 'GET'])
+def planalto():
+    lang = get_locale()
+    username = get_username()
+
+    if 'url' in request.form:
+        url_part = request.form["url"].split("/")[-1].strip(".htm").split("-")[0]
+        number = re.match(r"[a-zA-Z]*(([0-9]+).*)", url_part)[1]
+        type_ = re.match(r"^(d|D|m|M|l|L|)", url_part)[0]
+        values, scrapped = call_planalto(number, type_)
+    elif 'item' in request.form:
+        item_url = request.form["item"]
+        values, scrapped = scrap_record_planalto(item_url)
+    else:
+        return home()
+    return render_template('planalto.html', options=values, scrapped=scrapped, lang=lang, username=username)
 
 
 @app.route('/reconciliate')
@@ -177,6 +204,62 @@ def create_item_based_in_url_with_url(url=None):
         return home()
 
 
+@app.route('/search', methods=['GET', 'POST'])
+def search_entity():
+    if request.method == "POST":
+        data = request.get_json()
+        term = data['term']
+        lang = get_locale()
+
+        data = post_search_entity(term, lang)
+
+        items = []
+        if "search" in data:
+            for item in data["search"]:
+                if "id" in item and "label" in item and "description" in item:
+                    items.append({"qid": item["id"],
+                                  "label": item["label"],
+                                  "descr": item["description"]})
+        return jsonify(items), 200
+
+
+@app.route('/add_stat', methods=['GET', 'POST'])
+def add_statement():
+    if request.method == 'POST':
+        data = request.get_json()
+        qid = data['qid']
+        term = data['term']
+        filename = data['category'].lower() + ".json"
+
+        if data["qid"] != "unknown":
+            with open(os.path.join(app.static_folder, filename), encoding="utf-8") as file:
+                lexicon = json.load(file)
+            if term and qid:
+                lexicon[term] = qid
+            with open(os.path.join(app.static_folder, filename), 'w', encoding="utf-8") as file:
+                json.dump(lexicon, file, ensure_ascii=False)
+
+            with open(os.path.join(app.static_folder, "unknown.json"), encoding="utf-8") as file:
+                lexicon_unk = json.load(file)
+                if term in lexicon_unk[data['category'].lower()]:
+                    lexicon_unk[data['category'].lower()].remove(term)
+            with open(os.path.join(app.static_folder, "unknown.json"), 'w', encoding="utf-8") as file:
+                json.dump(lexicon_unk, file, ensure_ascii=False)
+        else:
+            with open(os.path.join(app.static_folder, "unknown.json"), encoding="utf-8") as file:
+                lexicon = json.load(file)
+                lexicon[data['category'].lower()].append(term)
+            with open(os.path.join(app.static_folder, "unknown.json"), 'w', encoding="utf-8") as file:
+                json.dump(lexicon, file, ensure_ascii=False)
+
+        return jsonify("200")
+    else:
+        return jsonify("204")
+
+
+########################################################################################################################
+# AUXILIAR FUNCTIONS
+########################################################################################################################
 def remove_stat_self(item_law, item_wd):
     if not item_wd.date:
         item_wd.date = item_law["date"]
@@ -223,26 +306,6 @@ def remove_stat_self(item_law, item_wd):
     return item_wd
 
 
-# Requisição para procurar entidades e filtrá-las pelos tesauros
-@app.route('/search', methods=['GET', 'POST'])
-def search_entity():
-    if request.method == "POST":
-        data = request.get_json()
-        term = data['term']
-        lang = get_locale()
-
-        data = post_search_entity(term, lang)
-
-        items = []
-        if "search" in data:
-            for item in data["search"]:
-                if "id" in item and "label" in item and "description" in item:
-                    items.append({"qid": item["id"],
-                                  "label": item["label"],
-                                  "descr": item["description"]})
-        return jsonify(items), 200
-
-
 def check_lexml_url(url):
     match = re.match(r"https://www.lexml.gov.br/urn/(.*)", url)
     if match:
@@ -269,39 +332,8 @@ def check_if_already_exists(lexml_id):
         return False, item_law
 
 
-@app.route('/add_stat', methods=['GET', 'POST'])
-def add_statement():
-    if request.method == 'POST':
-        data = request.get_json()
-        qid = data['qid']
-        term = data['term']
-        filename = data['category'].lower() + ".json"
-
-        if data["qid"] != "unknown":
-            with open(os.path.join(app.static_folder, filename), encoding="utf-8") as file:
-                lexicon = json.load(file)
-            if term and qid:
-                lexicon[term] = qid
-            with open(os.path.join(app.static_folder, filename), 'w', encoding="utf-8") as file:
-                json.dump(lexicon, file, ensure_ascii=False)
-
-            with open(os.path.join(app.static_folder, "unknown.json"), encoding="utf-8") as file:
-                lexicon_unk = json.load(file)
-                if term in lexicon_unk[data['category'].lower()]:
-                    lexicon_unk[data['category'].lower()].remove(term)
-            with open(os.path.join(app.static_folder, "unknown.json"), 'w', encoding="utf-8") as file:
-                json.dump(lexicon_unk, file, ensure_ascii=False)
-        else:
-            with open(os.path.join(app.static_folder, "unknown.json"), encoding="utf-8") as file:
-                lexicon = json.load(file)
-                lexicon[data['category'].lower()].append(term)
-            with open(os.path.join(app.static_folder, "unknown.json"), 'w', encoding="utf-8") as file:
-                json.dump(lexicon, file, ensure_ascii=False)
-
-        return jsonify("200")
-    else:
-        return jsonify("204")
-
-
+########################################################################################################################
+# MAIN
+########################################################################################################################
 if __name__ == '__main__':
     app.run()

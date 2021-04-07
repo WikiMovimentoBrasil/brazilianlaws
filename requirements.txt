@@ -4,3 +4,6 @@ Flask
 flask_babel
 pyyaml
 requests_oauthlib
+
+undetected_chromedriver
+bs4
