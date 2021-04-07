@@ -3,12 +3,15 @@ import requests
 import re
 import os
 import json
+import time
 import collections
 import textwrap
 from urllib.parse import quote, quote_plus
 from flask_babel import gettext
-from flask import current_app
+from flask import current_app, url_for
 from datetime import datetime
+
+import undetected_chromedriver as uc
 
 # Namespaces used in the API results
 ns = {
@@ -62,24 +65,30 @@ class Law:
 
         Attributes
         ----------
-        facet_tipoDocumento: str
-            type of legislation
         date: str
             date of promulgation
         urn: str
             identifier of the legislation item in the database
-        localidade: str
-            locality where the legislation has authority
-        autoridade: str
-            entity that issued the legislation
         title: str
             official name of the legislation
         description: str
             legislation long title, or digest, summarizing the content of the legislation
-        identifier: str
-            unique identifier in the database
         subject: list
             keywords of the legislation
+        facet_autoridade: list
+            entity that issued the legislation
+        facet_localidade: list
+            locality where the legislation has authority
+        facet_tipoDocumento: list
+            type of legislation
+        country: str
+            country to which the legislation was issued
+        lang: str
+            language in which the legislation was issued
+        wikiproject: str
+            project on wiki that the legislation is of interest
+        qid: str
+            Wikidata identifier for the legislation created
         """
 
         self.date = date
@@ -97,7 +106,12 @@ class Law:
 
     def wikidatify_self(self):
         """
-        Function to wikidatify a Law item
+        Function to transform information into Wikidata format for a Law item.
+
+        date has date format;
+        urn, title and description have string format;
+        tipoDocumento, localidade, autoridade and subject are lists of QIDs
+        country, lang, wikiproject and qid are QIDs
         """
         return {"tipoDocumento": wikidatify_list(self.facet_tipoDocumento, 'type.json'),
                 "date": _date(self.date),
@@ -113,6 +127,9 @@ class Law:
                 "qid": self.qid}
 
     def qs_self(self):
+        """
+        Function to transform wikidatified metadata into Quick Statements commands.
+        """
         if self.facet_localidade:
             dptbr = build_qs_command_string(
                 get_label(wikidatify_list([self.facet_tipoDocumento[0]], 'type.json')[0]["qid"]) +
@@ -385,3 +402,79 @@ def post_search_entity(term, lang="pt-br"):
     data = result.json()
 
     return data
+
+
+def call_planalto(number, type_):
+    options = uc.ChromeOptions()
+    options.binary_location = 'C:\Program Files\Google\Chrome\Application\chrome.exe'
+    options.add_argument('ignore-certificate-errors')
+    driver = uc.Chrome(chrome_options=options)
+    driver.get("https://legislacao.presidencia.gov.br/")
+
+    if not type_ or type_ == 'm' or type_ == 'M':
+        type_ = 'medida_provisoria'
+    elif type_ == 'd' or type_ == 'D':
+        type_ = 'decreto'
+    else:
+        type_ = 'lei'
+    time.sleep(3)
+    result = get_data(driver, number, type_)
+
+    driver.close()
+    return result, False
+
+
+def get_data(driver, num, type_):
+    number = driver.find_element_by_id("num_ato")
+    number.send_keys(str(num))
+    driver.find_element_by_id("btn-tipo-ato").click()
+    time.sleep(1)
+    select_type(driver, type_)
+
+    time.sleep(1)
+    div_tags = driver.find_elements_by_class_name("w-100 ")
+
+    result_options = []
+    for div_tag in div_tags[2:-1]:
+        name = ''
+        planalto_record = ''
+        full_text = ''
+        try:
+            name = div_tag.find_element_by_tag_name("h4").text
+
+            ul = div_tag.find_element_by_tag_name("ul").find_elements_by_tag_name("a")
+            planalto_record = ul[0].get_attribute("href")
+            full_text = ul[1].get_attribute("href")
+
+            result_options.append({"name": name,
+                                   "planalto_record": planalto_record,
+                                   "full_text": full_text})
+        except:
+            pass
+    return result_options
+
+
+def select_type(driver, type_):
+    input_ = driver.find_element_by_xpath("//input[@value='" + type_ + "']")
+    driver.execute_script("arguments[0].click();", input_)
+
+
+def scrap_record_planalto(url):
+    options = uc.ChromeOptions()
+    options.binary_location = 'C:\Program Files\Google\Chrome\Application\chrome.exe'
+    options.add_argument('ignore-certificate-errors')
+    driver = uc.Chrome(chrome_options=options)
+    driver.get(url)
+
+    time.sleep(2)
+    situacao = ''
+    chefe = ''
+    try:
+        rows = driver.find_elements_by_class_name("row")
+        situacao = rows[4].text
+        chefe = wikidatify_list([rows[5].text.split("\n")[1]], 'head.json')[0]
+    except IndexError:
+        pass
+
+    driver.close()
+    return [{"situacao": situacao.split("\n")[1], "chefe": chefe}], True

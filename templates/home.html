@@ -24,5 +24,15 @@
             <input id="url" type="url" name="url" class="form-control" style="font-size:115%;" placeholder="{{ _('Paste the URL') }}">
             <input type="submit" class="btn btn-primary" style="font-size:115%; width:100%; background-color: #029c36" value = {{ _('Submit') }}>
         </form>
+        <br>
+        {% if username == 'Ederporto' %}
+        <form id="form_url_planalto" action="{{ url_for('planalto') }}" method=post>
+            <h4 style="text-align:center">
+                <label for="url">{{ _("Also, you can insert a <i><a target=\"_blank\" href=\"https://legislacao.presidencia.gov.br/\">Palácio do Planalto</a></i> URL to insert more metadata into an law, decree or provisory measure item in Wikidata") }}</label>
+            </h4>
+            <input id="url_planalto" type="url" name="url" class="form-control" style="font-size:115%;" placeholder="{{ _('Paste the URL') }}">
+            <input type="submit" class="btn btn-primary" style="font-size:115%; width:100%; background-color: #029c36" value = {{ _('Submit') }}>
+        </form>
+    {% endif %}
     </div>
 {% endblock %}
