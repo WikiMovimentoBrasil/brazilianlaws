@@ -221,50 +221,51 @@ def create_item_based_in_url_with_url(url=None):
         return home()
 
 
-def remove_stat_self(item_law, item_wd):
-    if not item_wd.date:
+def remove_stat_self(item_law, existent_item):
+    item_wd = Law()
+    if not existent_item.date:
         item_wd.date = item_law["date"]
     else:
         item_wd.date = ''
-    if not item_wd.urn:
+    if not existent_item.urn:
         item_wd.urn = item_law["urn"]
     else:
         item_wd.urn = ''
-    if not item_wd.title:
+    if not existent_item.title:
         item_wd.title = item_law["title"]
     else:
         item_wd.title = ''
-    if not item_wd.description:
+    if not existent_item.description:
         item_wd.description = item_law["description"]
     else:
         item_wd.description = ''
-    if not item_wd.facet_tipoDocumento:
+    if not existent_item.facet_tipoDocumento:
         if item_law["tipoDocumento"]:
             item_wd.facet_tipoDocumento = [item_law["tipoDocumento"][0]["label"]]
         else:
             item_wd.facet_tipoDocumento = []
     else:
         item_wd.facet_autoridade = []
-    if not item_wd.country:
+    if not existent_item.country:
         item_wd.country = item_law["country"]
     else:
         item_wd.country = []
-    if not item_wd.lang:
+    if not existent_item.lang:
         item_wd.lang = item_law["lang"]
     else:
         item_wd.lang = []
-    if not item_wd.wikiproject:
+    if not existent_item.wikiproject:
         item_wd.wikiproject = item_law["wikiproject"]
     else:
         item_wd.wikiproject = []
-    if not item_wd.facet_localidade:
+    if not existent_item.facet_localidade:
         if item_law["localidade"]:
             item_wd.facet_localidade = item_law["localidade"][0]["label"]
         else:
             item_wd.facet_localidade = []
     else:
         item_wd.facet_localidade = []
-    if not item_wd.facet_autoridade:
+    if not existent_item.facet_autoridade:
         if item_law["autoridade"]:
             item_wd.facet_autoridade = item_law["autoridade"][0]["label"]
         else:
@@ -386,9 +387,8 @@ def post_item():
 
 
 def remove_redundant_statements(api_code, item):
-    qid_properties = ["P31", "P1001", "P790", "P921", "P17", "P407", "P5008"]
-    subjects_list = wikidatify_list(item.subject, 'subject.json')
-    qids_list = [x["qid"] for x in subjects_list if x["qid"]]
+    qid_properties = ["P921"]
+    qids_list = item.subject
     json_data = json.loads(api_code)
     new_claims = []
     if "claims" in json_data:
