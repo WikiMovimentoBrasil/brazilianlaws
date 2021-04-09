@@ -2,7 +2,6 @@ import os
 import yaml
 import re
 import json
-import requests
 from flask import Flask, render_template, request, redirect, session, jsonify, g
 from flask_babel import Babel, gettext
 from api import call_api, check_lexml_id_in_wikidata, post_search_entity, Law, wikidatify_list

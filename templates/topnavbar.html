@@ -1,6 +1,6 @@
 <nav class="topnav" id="topnavbar">
     <a tabindex="0" id="home" href="{{url_for('home')}}" class="active" style="color:#029c36">{{_("Homepage")}}</a>
-    <a tabindex="0" id="reconciliate" href="{{url_for('reconciliate')}}">{{_("Reconciliate")}}</a>
+    <a tabindex="0" id="reconciliate" href="{{url_for('reconciliate')}}">{{_("Other tasks")}}</a>
 {#    <a tabindex="0" id="tutorial" href="{{url_for('tutorial')}}">{{_("Ajuda")}}</a>#}
     {% if lang != 'en' %}
         <a class="right" tabindex="0" href="{{url_for('set_locale', return_to=request.script_root + request.full_path, lang='en')}}">EN</a>
@@ -11,7 +11,7 @@
     {% if username %}
         <a class="right" tabindex="0" target="_blank" href="https://www.wikidata.org/wiki/Special:Contributions/{{username}}">{{username}}</a>
     {% else %}
-        <a class="right" tabindex="0" href="{{ url_for('login', next=request.script_root + request.full_path) }}">{{ _("Autenticar-se")}}</a>
+        <a class="right" tabindex="0" href="{{ url_for('login', next=request.script_root + request.full_path) }}">{{ _("Authenticate")}}</a>
     {% endif %}
     <a tabindex="0" id="menu" href="javascript:void(0);" class="icon" onclick="menuFunction()" aria-label='{{_("Menu")}}'><i class="fa fa-bars"></i></a>
 </nav>
