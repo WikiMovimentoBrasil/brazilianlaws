@@ -15,6 +15,18 @@ def raw_request(params):
     return oauth.get(url, timeout=4)
 
 
+def post_request(params):
+    app = current_app
+    url = 'https://www.wikidata.org/w/api.php'
+    client_key = app.config['CONSUMER_KEY']
+    client_secret = app.config['CONSUMER_SECRET']
+    oauth = OAuth1Session(client_key,
+                          client_secret=client_secret,
+                          resource_owner_key=session['owner_key'],
+                          resource_owner_secret=session['owner_secret'])
+    return oauth.post(url, data=params, timeout=4)
+
+
 def api_request(params):
     return raw_request(params).json()
 

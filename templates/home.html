@@ -7,22 +7,43 @@
 {% endblock %}
 
 {% block title %}{{ _("Homepage") }}{% endblock %}
-
+{% block banner %}{% endblock %}
 {% block content %}
+<div class="w3-container w3-half">
+    <h1 style="text-align: center; padding-top:30px;">
+        {% if lang=="en" %}
+            <img class="banner" src="{{ url_for('static', filename= 'logo - en.svg') }}"
+                 alt='{{ _("Logotipo WikiProject Brazilian Laws") }}' width="75%"/>
+        {% else %}
+            <img class="banner" src="{{ url_for('static', filename= 'logo - pt.svg') }}"
+                 alt='{{ _("Logotipo WikiProject Brazilian Laws") }}' width="75%"/>
+        {% endif %}
+    </h1>
+    <h2 style="text-align:center; padding-top: 40px">
+        {{ _("Welcome to the <i>WikiProject Brazilian Laws Legislation Importer</i>") }}
+    </h2>
+    <h3 style="text-align:center; padding-top:40px; line-height:150%">
+        {% set projeto %}<a tabindex="0" target='_blank' aria-label='{{ _("WikiProject Brazilian Laws project") }}'
+                            href='https://www.wikidata.org/wiki/Wikidata:WikiProject_Brazilian_Laws'>{{ _("WikiProject Brazilian Laws") }}</a>{% endset %}
+        {{ _("This application was developed in the context of the <i><b>%(projeto)s</b></i> with support of <b>WikiCite</b> to facilitate the process of importing metadata of Brazilian legislation into <b><i><a target=\"_blank\" href=\"https://www.wikidata.org/\">Wikidata</a></i></b>.", projeto=projeto) }}
+    </h3>
     <div class="w3-container w3-quarter"></div>
-    <div class="w3-container w3-half">
-        <h2 style="text-align:center; padding-bottom:30px;">
-            {{ _("Welcome to the <i>WikiProject Brazilian Laws Legislation Importer</i>")}}
-        </h2>
-        <h3 style="text-align:center; padding-bottom:30px;">
-            {{_("This application was developed to facilitate the process of importing metadata of Brazilian legislation into <b><i>Wikidata</i></b>.")}}
-        </h3>
-        <form id="form_url" action="{{ url_for('create_item_based_in_url') }}" method=post>
-            <h4 style="text-align:center">
-                <label for="url">{{ _("You can create a new legislation item by inserting a <i><a target=\"_blank\" href=\"https://www.lexml.gov.br/\">LeXML</a></i> URL into the field bellow:") }}</label>
-            </h4>
-            <input id="url" type="url" name="url" class="form-control" style="font-size:115%;" placeholder="{{ _('Paste the URL') }}">
-            <input type="submit" class="btn btn-primary" style="font-size:115%; width:100%; background-color: #029c36" value = {{ _('Submit') }}>
-        </form>
-    </div>
+</div>
+<div class="w3-container w3-half">
+    <p style="text-align:center;padding-top:30px;">
+        {{ _("To create an item or reconciliate metadata in this tool, you need to be authenticated using your Wikimedia account. To do that, click on \"Authenticate\" on the menu at the top.") }}
+    </p>
+    <form id="form_url" action="{{ url_for('create_item_based_in_url') }}" method=post>
+        <p style="text-align:center;padding-top:30px;">
+            {{ _("You can begin the process of creating a new item by inserting a <i><a target=\"_blank\" href=\"https://www.lexml.gov.br/\">LeXML</a></i> URL into the field bellow.") }}
+        </p>
+        <p style="text-align:center;padding-top:30px;">
+            {{ _("You can also click on \"Reconciliate\" on the top to identify or create metadata that were not identified by other users.") }}
+        </p>
+        <input id="url" type="url" name="url" class="form-control" style="font-size:100%"
+               placeholder="{{ _('Paste the URL') }}">
+        <input type="submit" class="btn btn-primary" style="font-size:100%; width:100%; background-color: #029c36"
+               value= {{ _('Submit') }}>
+    </form>
+</div>
 {% endblock %}

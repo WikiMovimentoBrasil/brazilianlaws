@@ -2,10 +2,11 @@ import os
 import yaml
 import re
 import json
+import requests
 from flask import Flask, render_template, request, redirect, session, jsonify, g
 from flask_babel import Babel, gettext
-from api import call_api, check_lexml_id_in_wikidata, post_search_entity, Law
-from oauth_wikidata import get_username, get_token
+from api import call_api, check_lexml_id_in_wikidata, post_search_entity, Law, wikidatify_list
+from oauth_wikidata import get_username, get_token, post_request
 from requests_oauthlib import OAuth1Session
 
 __dir__ = os.path.dirname(__file__)
@@ -46,7 +47,7 @@ def login():
 
     base_authorization_url = 'https://www.wikidata.org/wiki/Special:OAuth/authorize'
     authorization_url = oauth.authorization_url(base_authorization_url,
-                                                oauth_consumer_key=client_key)
+                                                oauth_consumer_key=client_key, uselang=get_locale())
     return redirect(authorization_url)
 
 
@@ -91,7 +92,7 @@ def get_locale():
     """
     if request.args.get('lang'):
         session['lang'] = request.args.get('lang')
-    return session.get('lang', 'en')
+    return session.get('lang', 'pt')
 
 
 @app.route('/set_locale')
@@ -104,6 +105,39 @@ def set_locale():
 
     session["lang"] = lang
     return redirect(next_page)
+
+
+@app.errorhandler(400)
+@app.errorhandler(401)
+@app.errorhandler(403)
+@app.errorhandler(404)
+@app.errorhandler(405)
+@app.errorhandler(406)
+@app.errorhandler(408)
+@app.errorhandler(409)
+@app.errorhandler(410)
+@app.errorhandler(411)
+@app.errorhandler(412)
+@app.errorhandler(413)
+@app.errorhandler(414)
+@app.errorhandler(415)
+@app.errorhandler(416)
+@app.errorhandler(417)
+@app.errorhandler(418)
+@app.errorhandler(422)
+@app.errorhandler(423)
+@app.errorhandler(424)
+@app.errorhandler(429)
+@app.errorhandler(500)
+@app.errorhandler(501)
+@app.errorhandler(502)
+@app.errorhandler(503)
+@app.errorhandler(504)
+@app.errorhandler(505)
+def page_not_found(e):
+    lang = get_locale()
+    username = get_username()
+    return render_template('error.html', message=e, lang=lang, username=username)
 
 
 @app.route('/')
@@ -133,13 +167,13 @@ def reconciliate_category(cat):
         with open(os.path.join(app.static_folder, 'unknown.json'), encoding="utf-8") as file:
             unknown_values = json.load(file)[cat]
 
-    return render_template(cat+'.html', unknown_values=unknown_values, lang=lang, username=username)
+    return render_template(cat + '.html', unknown_values=unknown_values, lang=lang, username=username)
 
 
 @app.route('/add_entry', methods=['POST', 'GET'])
 def create_item_based_in_url():
     url = request.form['url'] if 'url' in request.form else ''
-    return redirect('/add_entry/'+url)
+    return redirect('/add_entry/' + url)
 
 
 @app.route('/add_entry/<path:url>', methods=['POST', 'GET'])
@@ -153,16 +187,26 @@ def create_item_based_in_url_with_url(url=None):
     if valid_url:
         law, lexicon, message, status_api = call_api(
             lexml_id.replace(":", "+").replace(";", "+").replace("-", "+").replace(",", "+"))
-        already_exists, item = check_if_already_exists(lexml_id)
+        if law.urn:
+            already_exists, item = check_if_already_exists(law.urn)
+        else:
+            already_exists, item = check_if_already_exists(lexml_id)
         item_law = law.wikidatify_self()
         if not already_exists and status_api:
             qs = law.qs_self()
+            api_create_code = json.dumps(law.create_api_self())
+        elif status_api:
+            qs = remove_stat_self(item_law, item)
+            api_create_code = json.dumps(qs.create_api_self())
+            api_create_code = remove_redundant_statements(api_create_code, item)
+            qs = qs.qs_self()
         else:
-            qs = remove_stat_self(item_law, item).qs_self()
+            return page_not_found(message)
         return render_template('create.html',
                                lang=lang,
                                item_law=item_law,
                                qs=qs,
+                               data=api_create_code,
                                qid=item.qid,
                                tipoDocumento=item_law["tipoDocumento"],
                                date=item_law["date"],
@@ -195,7 +239,10 @@ def remove_stat_self(item_law, item_wd):
     else:
         item_wd.description = ''
     if not item_wd.facet_tipoDocumento:
-        item_wd.facet_tipoDocumento = [item_law["tipoDocumento"][0]["label"]]
+        if item_law["tipoDocumento"]:
+            item_wd.facet_tipoDocumento = [item_law["tipoDocumento"][0]["label"]]
+        else:
+            item_wd.facet_tipoDocumento = []
     else:
         item_wd.facet_autoridade = []
     if not item_wd.country:
@@ -211,19 +258,24 @@ def remove_stat_self(item_law, item_wd):
     else:
         item_wd.wikiproject = []
     if not item_wd.facet_localidade:
-        item_wd.facet_localidade = item_law["localidade"][0]["label"]
+        if item_law["localidade"]:
+            item_wd.facet_localidade = item_law["localidade"][0]["label"]
+        else:
+            item_wd.facet_localidade = []
     else:
         item_wd.facet_localidade = []
     if not item_wd.facet_autoridade:
-        item_wd.facet_autoridade = item_law["autoridade"][0]["label"]
+        if item_law["autoridade"]:
+            item_wd.facet_autoridade = item_law["autoridade"][0]["label"]
+        else:
+            item_wd.facet_autoridade = []
     else:
-        item_wd.facet_localidade = []
+        item_wd.facet_autoridade = []
 
     item_wd.subject = [x["label"] for x in item_law["subject"]]
     return item_wd
 
 
-# Requisição para procurar entidades e filtrá-las pelos tesauros
 @app.route('/search', methods=['GET', 'POST'])
 def search_entity():
     if request.method == "POST":
@@ -301,6 +353,52 @@ def add_statement():
         return jsonify("200")
     else:
         return jsonify("204")
+
+
+@app.route("/post", methods=['POST'])
+def post_item():
+    token = get_token()
+    base_url = "https://www.wikidata.org/w/api.php"
+
+    json_data = request.get_json()
+    data = json_data["data"]
+    qid = json_data["qid"]
+
+    params = {
+        "action": "wbeditentity",
+        "format": "json",
+        "token": token,
+        "id": qid,
+        "new": "item",
+        "data": data
+    }
+
+    if qid:
+        params.pop("new")
+    else:
+        params.pop("id")
+
+    result = post_request(params)
+    if 'error' in result.json():
+        return jsonify('204')
+    else:
+        return jsonify('200')
+
+
+def remove_redundant_statements(api_code, item):
+    qid_properties = ["P31", "P1001", "P790", "P921", "P17", "P407", "P5008"]
+    subjects_list = wikidatify_list(item.subject, 'subject.json')
+    qids_list = [x["qid"] for x in subjects_list if x["qid"]]
+    json_data = json.loads(api_code)
+    new_claims = []
+    if "claims" in json_data:
+        claims = json_data["claims"]
+        for index, value in enumerate(claims):
+            if not (value["mainsnak"]["property"] in qid_properties and ("Q" + str(value["mainsnak"]["datavalue"]["value"]["numeric-id"])) in qids_list):
+                new_claims.append(value)
+        json_data["claims"] = new_claims
+
+    return json.dumps(json_data)
 
 
 if __name__ == '__main__':

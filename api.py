@@ -112,8 +112,49 @@ class Law:
                 "wikiproject": self.wikiproject,
                 "qid": self.qid}
 
-    def qs_self(self):
+    def create_api_self(self):
+        data = {}
+        claims = []
+
+        if self.title:
+            data["labels"] = labels(self.title, 'pt-br')
+        if self.facet_localidade and self.facet_tipoDocumento:
+            data["descriptions"] = descriptions(
+                get_label(wikidatify_list([self.facet_tipoDocumento[0]], 'type.json')[0]["qid"]) +
+                " com jurisdição em " +
+                get_label(wikidatify_list([self.facet_localidade[0]], 'locality.json')[0]["qid"]),
+                "pt-br")
+
+        if self.facet_tipoDocumento:
+            claims = claims + claim_qid(wikidatify_list(self.facet_tipoDocumento, 'type.json'), 'P31')
         if self.facet_localidade:
+            claims = claims + claim_qid(wikidatify_list(self.facet_localidade, 'locality.json'), 'P1001')
+        if self.facet_autoridade:
+            claims = claims + claim_qid(wikidatify_list(self.facet_autoridade, 'authority.json'), 'P790')
+        if self.subject:
+            claims = claims + claim_qid(wikidatify_list(self.subject, 'subject.json'), 'P921')
+        if self.country:
+            claims = claims + claim_qid([self.country], 'P17')
+        if self.lang:
+            claims = claims + claim_qid([self.country], 'P407')
+        if self.wikiproject:
+            claims = claims + claim_qid([self.wikiproject], 'P5008')
+        if self.date:
+            claims = claims + claim_date(self.date, 'P577')
+        if self.urn:
+            claims = claims + claim_string(self.urn, 'P9119', False)
+        if self.title:
+            claims = claims + claim_monolingual(self.title, 'P1476')
+        if self.description:
+            claims = claims + claim_monolingual(self.description, 'P9376')
+
+        if claims:
+            data["claims"] = claims
+
+        return data
+
+    def qs_self(self):
+        if self.facet_localidade and self.facet_tipoDocumento:
             dptbr = build_qs_command_string(
                 get_label(wikidatify_list([self.facet_tipoDocumento[0]], 'type.json')[0]["qid"]) +
                 " com jurisdição em " +
@@ -350,12 +391,14 @@ def call_api(search_terms):
         tag = tree.findall('.//srw_dc:dc', namespaces=ns)[0]
         new_law = get_values(tag)
     except IndexError:
-        message = gettext(u"It was not possible to find information about this item, please report")
+        message = gettext(
+            u"It was not possible to find information about this item, try again removing part of the end of the URL. If it continues, please, report.")
         status = False
 
     lexicon = get_lexicon(new_law)
     if not new_law.urn:
-        message = gettext(u"It was not possible to find information about this item, please report")
+        message = gettext(
+            u"It was not possible to find information about this item, try again removing part of the end of the URL. If it continues, please, report.")
         status = False
     return new_law, lexicon, message, status
 
@@ -363,7 +406,7 @@ def call_api(search_terms):
 def check_lexml_id_in_wikidata(lexml_id):
     url = "https://query.wikidata.org/sparql"
     params = {
-        "query": "SELECT ?qid (SAMPLE(?tipoDocumento) AS ?facet_tipoDocumento) (SAMPLE(?title) AS ?title) (SAMPLE(?date) AS ?date) (SAMPLE(?urn) AS ?urn) (SAMPLE(?locality) AS ?facet_localidade) (SAMPLE(?authority) AS ?facet_autoridade) (GROUP_CONCAT(?subject_;SEPARATOR=';') AS ?subject) (GROUP_CONCAT(?digest_;SEPARATOR=' ') AS ?description) WHERE { ?item wdt:P9119 '"+lexml_id+"'. BIND(SUBSTR(STR(?item),32) AS ?qid) OPTIONAL{ ?item wdt:P31 ?tipoDocumento_. BIND(SUBSTR(STR(?tipoDocumento_),32) AS ?tipoDocumento)} OPTIONAL{ ?item wdt:P1476 ?title. } OPTIONAL{ ?item p:P577/psv:P577 ?date_p. ?date_p wikibase:timeValue ?date_wb. ?date_p wikibase:timePrecision ?date_precision. BIND(CONCAT('+',STR(?date_wb),'/',STR(?date_precision)) AS ?date) } OPTIONAL{ ?item wdt:P9119 ?urn. } OPTIONAL{ ?item wdt:P1001 ?locality_. BIND(SUBSTR(STR(?locality_),32) AS ?locality) } OPTIONAL{ ?item wdt:P790 ?authority_. BIND(SUBSTR(STR(?authority_),32) AS ?authority) } OPTIONAL{ ?item wdt:P921 ?subject_aux. BIND(SUBSTR(STR(?subject_aux),32) AS ?subject_) } OPTIONAL{ ?item wdt:P9376 ?digest_. FILTER(LANG(?digest_)='pt-br') } } GROUP BY ?qid",
+        "query": "SELECT ?qid (SAMPLE(?tipoDocumento) AS ?facet_tipoDocumento) (SAMPLE(?title) AS ?title) (SAMPLE(?date) AS ?date) (SAMPLE(?urn) AS ?urn) (SAMPLE(?locality) AS ?facet_localidade) (SAMPLE(?authority) AS ?facet_autoridade) (GROUP_CONCAT(?subject_;SEPARATOR=';') AS ?subject) (GROUP_CONCAT(?digest_;SEPARATOR=' ') AS ?description) WHERE { ?item wdt:P9119 '" + lexml_id + "'. BIND(SUBSTR(STR(?item),32) AS ?qid) OPTIONAL{ ?item wdt:P31 ?tipoDocumento_. BIND(SUBSTR(STR(?tipoDocumento_),32) AS ?tipoDocumento)} OPTIONAL{ ?item wdt:P1476 ?title. } OPTIONAL{ ?item p:P577/psv:P577 ?date_p. ?date_p wikibase:timeValue ?date_wb. ?date_p wikibase:timePrecision ?date_precision. BIND(CONCAT('+',STR(?date_wb),'/',STR(?date_precision)) AS ?date) } OPTIONAL{ ?item wdt:P9119 ?urn. } OPTIONAL{ ?item wdt:P1001 ?locality_. BIND(SUBSTR(STR(?locality_),32) AS ?locality) } OPTIONAL{ ?item wdt:P790 ?authority_. BIND(SUBSTR(STR(?authority_),32) AS ?authority) } OPTIONAL{ ?item wdt:P921 ?subject_aux. BIND(SUBSTR(STR(?subject_aux),32) AS ?subject_) } OPTIONAL{ ?item wdt:P9376 ?digest_. FILTER(LANG(?digest_)='pt-br') } } GROUP BY ?qid",
         "format": "json"
     }
     result = requests.get(url=url, params=params, headers={'User-agent': 'WikiProject Brazilian Laws 1.0'})
@@ -385,3 +428,216 @@ def post_search_entity(term, lang="pt-br"):
     data = result.json()
 
     return data
+
+
+def claim_qid(item_list, prop, with_ref=True):
+    result = []
+    for item in item_list:
+        if "wikidatified" in item and item["wikidatified"]:
+            result_item = {
+                "mainsnak":
+                    {"snaktype": "value",
+                     "property": prop,
+                     "datavalue":
+                         {
+                             "value":
+                                 {
+                                     "entity-type": "item",
+                                     "numeric-id": int(item["qid"].strip("Q"))
+                                 },
+                             "type": "wikibase-entityid"
+                         }
+                     },
+                "type": "statement",
+                "rank": "normal"
+            }
+            if with_ref:
+                result_item["references"] = references()
+            result.append(result_item)
+    return result
+
+
+def claim_date(date, prop, with_ref=True):
+    result = []
+
+    if date.__len__() == 10:
+        date = "+" + date + "T00:00:00Z"
+        precision = 11
+    elif date.__len__() == 7:
+        date = "+" + date + "-00T00:00:00Z"
+        precision = 10
+    if date.__len__() == 4:
+        date = "+" + date + "-00-00T00:00:00Z"
+        precision = 9
+    else:
+        return []
+
+    result_item = {
+        "mainsnak":
+            {"snaktype": "value",
+             "property": prop,
+             "datavalue":
+                 {
+                     "value":
+                         {
+                             "time": date,
+                             "precision": precision,
+                             "timezone": 0,
+                             "before": 0,
+                             "after": 0,
+                             "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                         },
+                     "type": "time"
+                 }
+             },
+        "type": "statement",
+        "rank": "normal"
+    }
+    if with_ref:
+        result_item["references"] = references()
+    result.append(result_item)
+
+    return result
+
+
+def claim_monolingual(text, prop, lang="pt-br", with_ref=True):
+    text_parts = textwrap.wrap(text, 1500, break_long_words=False, break_on_hyphens=False)
+    result = []
+    if text_parts:
+        for order, part in enumerate(text_parts):
+            result_item = {
+                "mainsnak":
+                    {
+                        "snaktype": "value",
+                        "property": prop,
+                        "datavalue":
+                            {
+                                "value":
+                                    {
+                                        "text": part,
+                                        "language": lang
+                                    },
+                                "type": "monolingualtext"
+                            }
+                    },
+                "type": "statement",
+                "rank": "normal",
+            }
+            if text_parts.__len__() > 1:
+                result_item["qualifiers"] = order_qualifiers(order)
+
+            if with_ref:
+                result_item["references"] = references()
+            result.append(result_item)
+    return result
+
+
+def claim_string(text, prop, with_ref=True):
+    result = []
+
+    result_item = {
+        "mainsnak":
+            {
+                "snaktype": "value",
+                "property": prop,
+                "datavalue":
+                    {
+                        "value": text,
+                        "type": "string"
+                    }
+            },
+        "type": "statement",
+        "rank": "normal"
+    }
+    if with_ref:
+        result_item["references"] = references()
+    result.append(result_item)
+    return result
+
+
+def labels(text, lang="pt-br"):
+    return {lang: {"language": lang, "value": text}}
+
+
+def descriptions(text, lang="pt-br"):
+    return {lang: {"language": lang, "value": text}}
+
+
+def references():
+    today = datetime.today().strftime('+%Y-%m-%dT00:00:00Z')
+    return [
+        {
+            "snaks":
+                {
+                    "P248":
+                        [
+                            {
+                                "snaktype": "value",
+                                "property": "P248",
+                                "datavalue":
+                                    {
+                                        "value":
+                                            {
+                                                "entity-type": "item",
+                                                "numeric-id": 10317762
+                                            },
+                                        "type": "wikibase-entityid"
+                                    }
+                            }
+                        ],
+                    "P813":
+                        [
+                            {
+                                "snaktype": "value",
+                                "property": "P813",
+                                "datavalue":
+                                    {
+                                        "value":
+                                            {
+                                                "time": today,
+                                                "precision": 11,
+                                                "timezone": 0,
+                                                "before": 0,
+                                                "after": 0,
+                                                "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                                            },
+                                        "type": "time"
+                                    }
+                            }
+                        ]
+                }
+        }
+    ]
+
+
+def order_qualifiers(order):
+    return {
+        "P1545":
+            [
+                {
+                    "snaktype": "value",
+                    "property": "P1545",
+                    "datavalue":
+                        {
+                            "value": order,
+                            "type": "string"
+                        }
+                }
+            ],
+        "P1480":
+            [
+                {
+                    "snaktype": "value",
+                    "property": "P1480",
+                    "datavalue":
+                        {
+                            "value":
+                                {
+                                    "entity-type": "item",
+                                    "numeric-id": 105642994
+                                },
+                            "type": "wikibase-entityid"
+                        }
+                }
+            ]
+    }

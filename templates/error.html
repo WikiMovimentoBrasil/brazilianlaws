@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}{{ _("Something went wrong!") }}{% endblock %}
+
+{% block navbar %}
+    {% with lang=lang, username=username %}
+        {% include 'topnavbar.html' %}
+    {% endwith %}
+{% endblock %}
+
+{% block banner %}
+    <div class="w3-row">
+        <div class="w3-container w3-quarter"></div>
+        <h1 class="w3-container w3-half" style="text-align: center; padding-top:30px; padding-bottom:30px">
+            {% if lang=="en" %}
+                <img class="banner" src="{{ url_for('static', filename= 'logo - en.svg') }}"
+                     alt='{{ _("Logotipo WikiProject Brazilian Laws") }}' width="75%"/>
+            {% else %}
+                <img class="banner" src="{{ url_for('static', filename= 'logo - pt.svg') }}"
+                     alt='{{ _("Logotipo WikiProject Brazilian Laws") }}' width="75%"/>
+            {% endif %}
+        </h1>
+        <div class="w3-container w3-quarter"></div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="w3-row" style="text-align: center">
+        <div class="w3-container w3-quarter"></div>
+        <div class="w3-container w3-half">
+            <h1><b>{{ _("Something went wrong!") }}</b></h1>
+            <p style="padding-top: 30px"><b>{{ message }}</b></p>
+        </div>
+    </div>
+    <div class="w3-row" style="padding-top: 30px">
+        <div class="w3-container w3-quarter"></div>
+        <div class="w3-container w3-half">
+            <a tabindex="0" href="https://github.com/WikiMovimentoBrasil/brazilianlaws/issues" target="_blank">
+                <button type="button" class="button" id="report" style="background-color:#029c36; width:100%; color:white">
+                    {{ _("REPORT ERROR") }}
+                </button>
+            </a>
+        </div>
+    </div>
+    <div class="w3-row" style="padding-top: 30px">
+        <div class="w3-container w3-quarter"></div>
+        <div class="w3-container w3-half">
+            <a tabindex="0" href="{{ url_for('home') }}">
+                <button type="button" class="button" id="goback" style="background-color:#029c36; color:white; width:100%;">
+                    {{ _("BACK TO HOMEPAGE") }}
+                </button>
+            </a>
+        </div>
+    </div>
+{% endblock %}

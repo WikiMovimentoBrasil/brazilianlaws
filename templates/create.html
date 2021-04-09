@@ -13,7 +13,7 @@
     <div class="w3-row" style="margin-top: 30px">
         <div class="w3-container w3-twothird">
             <table class="table table-responsive table-striped"
-                   style="overflow-wrap: break-word;font-size: 125%; width: 100%; table-layout: fixed; overflow-wrap: break-word;">
+                   style="overflow-wrap: break-word; width: 100%; table-layout: fixed; overflow-wrap: break-word;">
                 <tr>
                     <th>{{ _("Title") }}</th>
                     <td>{{ title }}</td>
@@ -122,18 +122,18 @@
                 </tr>
             </table>
             {% if qs %}
-                <a target="_blank" href="https://quickstatements.toolforge.org/#/v1={{ qs }}">
-                    <button class="btn btn-primary" style="font-size:115%; width:100%; background-color: #029c36">
-                        {{ _("UPLOAD TO WIKIDATA") }}
-                    </button>
-                </a>
+                <button class="btn btn-primary" id="upload_to_wikidata" value="{{ data }}" data-qid="{{ qid }}"
+                        style="font-size:100%; width:100%; background-color: #029c36">
+                    {{ _("UPLOAD TO WIKIDATA") }}
+                </button>
             {% endif %}
         </div>
-        <div class="w3-container w3-third" style="font-size: 125%">
+        <div class="w3-container w3-third">
             {% if not qid %}
-                {{ _("This item doesn't exists yet in Wikidata.") }}<br><br>
+                <b><span style="color: red">{{ _("This item doesn't exists yet in Wikidata.") }}</span></b><br><br>
             {% else %}
-                {{ _("This item <a target='_blank' href='https://www.wikidata.org/wiki/%(qid)s' title='Item already exists'>already exists in Wikidata.</a>", qid=qid) }}
+                <b><span
+                        style="color: #029c36;">{{ _("This item <a target='_blank' href='https://www.wikidata.org/wiki/%(qid)s' title='Item already exists'>already exists in Wikidata.</a>", qid=qid) }}</span></b>
                 <br><br>
                 {{ _("Use <b>{{Cite Q|%(qid)s}}</b> to cite this item as reference on the English Wikipedia.", qid=qid) }}
                 <br><br>
@@ -160,13 +160,13 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                                style="font-size:125%; ">
+                                style="font-size:100%; ">
                             {{ _("Cancel") }}
                         </button>
                         <a title="{{ _('Log in') }}"
                            href="{{ url_for('login', next=request.script_root + request.full_path) }}">
                             <button type="button" class="btn btn-primary"
-                                    style="font-size:125%; background-color: #029c36">
+                                    style="font-size:100%; background-color: #029c36">
                                 {{ _("Log in") }}
                             </button>
                         </a>
@@ -280,6 +280,27 @@
                 url: "/add_stat",
                 type: "POST",
                 data: JSON.stringify(data),
+                contentType: "application/json",
+                dataType: "json",
+
+                success: function () {
+                    alert("{{ _('Statement inserted successfully!') }}");
+                    window.location.reload();
+                    $('#addModal').modal('hide');
+                },
+                error: function () {
+                    alert("Ocorreu algum erro!");
+                }
+            });
+        });
+
+        $('#upload_to_wikidata').on('click', function (event) {
+            var data = $('#upload_to_wikidata')[0].value;
+            var qid = $('#upload_to_wikidata').attr('data-qid');
+            $.ajax({
+                url: "/post",
+                type: "POST",
+                data: JSON.stringify({"data":data,"qid":qid}),
                 contentType: "application/json",
                 dataType: "json",
 

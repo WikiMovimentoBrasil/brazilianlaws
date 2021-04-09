@@ -10,8 +10,8 @@
     {% endif %}
     {% if username %}
         <a class="right" tabindex="0" target="_blank" href="https://www.wikidata.org/wiki/Special:Contributions/{{username}}">{{username}}</a>
-{#    {% else %}#}
-{#        <a class="right" tabindex="0" href="{{ url_for('login', next=request.script_root + request.full_path) }}">{{ _("Autenticar-se")}}</a>#}
+    {% else %}
+        <a class="right" tabindex="0" href="{{ url_for('login', next=request.script_root + request.full_path) }}">{{ _("Autenticar-se")}}</a>
     {% endif %}
     <a tabindex="0" id="menu" href="javascript:void(0);" class="icon" onclick="menuFunction()" aria-label='{{_("Menu")}}'><i class="fa fa-bars"></i></a>
 </nav>
