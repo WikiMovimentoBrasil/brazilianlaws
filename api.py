@@ -117,13 +117,12 @@ class Law:
         claims = []
 
         if self.title:
-            data["labels"] = labels(self.title, 'pt-br')
+            data["labels"] = labels(self.title, ["pt-br", "pt"])
         if self.facet_localidade and self.facet_tipoDocumento:
-            data["descriptions"] = descriptions(
-                get_label(wikidatify_list([self.facet_tipoDocumento[0]], 'type.json')[0]["qid"]) +
-                " com jurisdição em " +
-                get_label(wikidatify_list([self.facet_localidade[0]], 'locality.json')[0]["qid"]),
-                "pt-br")
+            descr = get_label(wikidatify_list([self.facet_tipoDocumento[0]], 'type.json')[0][
+                                  "qid"]) + " com jurisdição em " + get_label(
+                wikidatify_list([self.facet_localidade[0]], 'locality.json')[0]["qid"])
+            data["descriptions"] = descriptions(descr, ["pt-br", "pt"])
 
         if self.facet_tipoDocumento:
             claims = claims + claim_qid(wikidatify_list(self.facet_tipoDocumento, 'type.json'), 'P31')
@@ -555,12 +554,18 @@ def claim_string(text, prop, with_ref=True):
     return result
 
 
-def labels(text, lang="pt-br"):
-    return {lang: {"language": lang, "value": text}}
+def labels(text, langs):
+    result = {}
+    for lang in langs:
+        result[lang] = {"language": lang, "value": text}
+    return result
 
 
-def descriptions(text, lang="pt-br"):
-    return {lang: {"language": lang, "value": text}}
+def descriptions(text, langs):
+    result = {}
+    for lang in langs:
+        result[lang] = {"language": lang, "value": text}
+    return result
 
 
 def references():
