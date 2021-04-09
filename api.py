@@ -466,7 +466,7 @@ def claim_date(date, prop, with_ref=True):
     elif date.__len__() == 7:
         date = "+" + date + "-00T00:00:00Z"
         precision = 10
-    if date.__len__() == 4:
+    elif date.__len__() == 4:
         date = "+" + date + "-00-00T00:00:00Z"
         precision = 9
     else:
