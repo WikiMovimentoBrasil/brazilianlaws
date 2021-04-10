@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  1.0\n"
 "Report-Msgid-Bugs-To: eder.porto@wmnobrasil.com\n"
-"POT-Creation-Date: 2021-04-10 02:09-0300\n"
+"POT-Creation-Date: 2021-04-10 04:26-0300\n"
 "PO-Revision-Date: 2021-04-01 20:43-0300\n"
 "Last-Translator: Éder Porto <eder.porto@wmnobrasil.com>\n"
 "Language: pt\n"
@@ -56,15 +56,15 @@ msgid "WikiProject Brazilian Laws project"
 msgstr "projeto WikiProjeto Leis Brasileiras"
 
 #: templates/base.html:57
-#, python-format
 msgid ""
 "<i>WikiProject Brazilian Laws Legislation Importer</i> is an application "
 "developed in the context of the  <i><b>%(projeto)s</b></i> in Wikidata, "
-"with support of <b>WikiCite</b>."
+"realized by the <b>Wiki Movimento Brasil</b>, with support of "
+"<b>WikiCite</b>."
 msgstr ""
 "<i>Importador de Legislação do WikiProjeto Leis Brasileiras</i> é um "
 "aplicativo desenvolvido no contexto dos <i><b>%(projeto)s</b></i> no "
-"Wikidata, com suporte do <b>WikiCite</b>."
+"Wikidata, realizado pelo <b>Wiki Movimento Brasil</b> com suporte do <b>WikiCite</b>."
 
 #: templates/create.html:9
 msgid "Create item"
@@ -183,18 +183,17 @@ msgstr ""
 "Brasileiras</i>"
 
 #: templates/home.html:28
-#, python-format
 msgid ""
 "This application was developed in the context of the "
-"<i><b>%(projeto)s</b></i> with support of <b>WikiCite</b> to facilitate "
-"the process of importing metadata of Brazilian legislation into <b><i><a "
-"target=\"_blank\" "
+"<i><b>%(projeto)s</b></i>, realized by the <b>Wiki Movimento Brasil</b>, "
+"with support of <b>WikiCite</b> to facilitate the process of importing "
+"metadata of Brazilian legislation into <b><i><a target=\"_blank\" "
 "href=\"https://www.wikidata.org/\">Wikidata</a></i></b>."
 msgstr ""
-"Esta aplicação foi desenvolvida no contexto do <i><b>%(projeto)s</b></i> "
-"com apoio do <b>WikiCite</b> para facilitar o processo de importação de "
-"legislação Brasileira para o <b><i><a target=\"_blank\" "
-"href=\"https://www.wikidata.org/\">Wikidata</a></i></b>."
+"Esta aplicação foi desenvolvida no contexto do <i><b>%(projeto)s</b></i>, "
+"realizada pelo <b>Wiki Movimento Brasil</b>, com apoio do <b>WikiCite</b> "
+"para facilitar o processo de importação de legislação Brasileira para o "
+"<b><i><a target=\"_blank\" href=\"https://www.wikidata.org/\">Wikidata</a></i></b>."
 
 #: templates/home.html:34
 msgid ""
@@ -318,8 +317,9 @@ msgid ""
 "In such cases, users can mark this metadata as \"Not found/nonexistent\","
 " so others users can try to reconcile them."
 msgstr ""
-"Nestes casos, usuários(as) podem marcar este metadado como \"Não encontrado/não existente\","
-" para que outros(as) usuários(as) possam tentar reconciliá-los."
+"Nestes casos, usuários(as) podem marcar este metadado como \"Não "
+"encontrado/não existente\", para que outros(as) usuários(as) possam "
+"tentar reconciliá-los."
 
 #: templates/reconciliate.html:28
 msgid ""
@@ -331,7 +331,9 @@ msgstr ""
 
 #: templates/subject.html:17
 msgid "Subjects in the context of this application means the keywords of an item."
-msgstr "Assuntos, no contexto dessa aplicação, representam as palavras-chave de um item."
+msgstr ""
+"Assuntos, no contexto dessa aplicação, representam as palavras-chave de "
+"um item."
 
 #: templates/topnavbar.html:3
 msgid "Other tasks"
@@ -350,5 +352,6 @@ msgid ""
 "Document type in the context of this application means the instance of "
 "and item."
 msgstr ""
-"Tipo de documento, no contexto dessa aplicação, representa a instância de um item."
+"Tipo de documento, no contexto dessa aplicação, representa a instância de"
+" um item."
 

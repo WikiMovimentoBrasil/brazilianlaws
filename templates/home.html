@@ -22,22 +22,22 @@
     <h2 style="text-align:center; padding-top: 40px">
         {{ _("Welcome to the <i>WikiProject Brazilian Laws Legislation Importer</i>") }}
     </h2>
-    <h3 style="text-align:center; padding-top:40px; line-height:150%">
+    <h3 style="text-align:center; padding-top:40px; line-height:135%">
         {% set projeto %}<a tabindex="0" target='_blank' aria-label='{{ _("WikiProject Brazilian Laws project") }}'
                             href='https://www.wikidata.org/wiki/Wikidata:WikiProject_Brazilian_Laws'>{{ _("WikiProject Brazilian Laws") }}</a>{% endset %}
-        {{ _("This application was developed in the context of the <i><b>%(projeto)s</b></i> with support of <b>WikiCite</b> to facilitate the process of importing metadata of Brazilian legislation into <b><i><a target=\"_blank\" href=\"https://www.wikidata.org/\">Wikidata</a></i></b>.", projeto=projeto) }}
+        {{ _("This application was developed in the context of the <i><b>%(projeto)s</b></i>, realized by the <b>Wiki Movimento Brasil</b>, with support of <b>WikiCite</b> to facilitate the process of importing metadata of Brazilian legislation into <b><i><a target=\"_blank\" href=\"https://www.wikidata.org/\">Wikidata</a></i></b>.", projeto=projeto) }}
     </h3>
     <div class="w3-container w3-quarter"></div>
 </div>
 <div class="w3-container w3-half">
-    <p style="text-align:center;padding-top:30px;">
+    <p style="text-align:center;padding-top:30px;line-height:135%">
         {{ _("To create an item or reconciliate metadata in this tool, you need to be authenticated using your Wikimedia account. To do that, click on \"Authenticate\" on the menu at the top.") }}
     </p>
     <form id="form_url" action="{{ url_for('create_item_based_in_url') }}" method=post>
-        <p style="text-align:center;padding-top:25px;">
+        <p style="text-align:center;padding-top:25px;line-height:135%">
             {{ _("You can begin the process of creating a new item by inserting a <i><a target=\"_blank\" href=\"https://www.lexml.gov.br/\">LeXML</a></i> URL into the field bellow.") }}
         </p>
-        <p style="text-align:center;padding-top:30px;">
+        <p style="text-align:center;padding-top:25px;line-height:135%">
             {{ _("You can also click on \"Other tasks\" on the top to identify or create metadata that were not identified by other users.") }}
         </p>
         <input id="url" type="url" name="url" class="form-control" style="font-size:100%"
