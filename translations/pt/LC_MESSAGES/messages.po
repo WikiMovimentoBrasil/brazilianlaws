@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  1.0\n"
 "Report-Msgid-Bugs-To: eder.porto@wmnobrasil.com\n"
-"POT-Creation-Date: 2021-04-09 17:37-0300\n"
+"POT-Creation-Date: 2021-04-10 02:09-0300\n"
 "PO-Revision-Date: 2021-04-01 20:43-0300\n"
 "Last-Translator: Éder Porto <eder.porto@wmnobrasil.com>\n"
 "Language: pt\n"
@@ -18,91 +18,24 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.9.0\n"
 
-#: templates/authority.html:9 templates/authority.html:14
-#: templates/create.html:82 templates/reconciliate.html:23
-#: templates/unknown.html:74
+#: templates/authority.html:9 templates/authority.html:16
+#: templates/create.html:82 templates/reconciliate.html:31
 msgid "Authority"
 msgstr "Autoridade"
 
-#: templates/authority.html:29 templates/create.html:40
+#: templates/authority.html:17
+msgid ""
+"Authority in the context of this application means the organization or "
+"institution that issued an item."
+msgstr ""
+"Autoridade, no contexto desta aplicação, representa a organização ou "
+"instituição que emitiu o item."
+
+#: templates/authority.html:33 templates/create.html:40
 #: templates/create.html:74 templates/create.html:100 templates/create.html:126
-#: templates/locality.html:29 templates/subject.html:29 templates/type.html:29
-#: templates/unknown.html:36 templates/unknown.html:66
-#: templates/unknown.html:88 templates/unknown.html:110
+#: templates/locality.html:33 templates/subject.html:33 templates/type.html:33
 msgid "Reconcile"
 msgstr "Reconciliar"
-
-#: templates/authority.html:41 templates/create.html:197
-#: templates/locality.html:41 templates/subject.html:41 templates/type.html:41
-#: templates/unknown.html:133
-msgid "Reconciliation"
-msgstr "Reconciliação"
-
-#: templates/authority.html:46 templates/create.html:203
-#: templates/locality.html:47 templates/subject.html:46 templates/type.html:46
-#: templates/unknown.html:138
-msgid "Search for a Wikidata entity corresponding to the term you are trying to reconcile."
-msgstr "Procure uma entidade Wikidata correspondente ao termo que você está tentando reconciliar."
-
-#: templates/authority.html:47 templates/create.html:204
-#: templates/locality.html:48 templates/subject.html:47 templates/type.html:47
-#: templates/unknown.html:139
-msgid "If no corresponding Wikidata entity exists yet, please check the option"
-msgstr "Se nenhuma entidade Wikidata correspondente existir ainda, marque a opção"
-
-#: templates/authority.html:48 templates/authority.html:84
-#: templates/authority.html:111 templates/create.html:205
-#: templates/create.html:244 templates/create.html:271
-#: templates/locality.html:49 templates/locality.html:85
-#: templates/locality.html:112 templates/subject.html:48
-#: templates/subject.html:84 templates/subject.html:111 templates/type.html:48
-#: templates/type.html:84 templates/type.html:111 templates/unknown.html:140
-#: templates/unknown.html:176 templates/unknown.html:203
-msgid "Not found/nonexistent"
-msgstr "Não encontrado/não existente"
-
-#: templates/authority.html:54 templates/create.html:211
-#: templates/locality.html:55 templates/subject.html:54 templates/type.html:54
-#: templates/unknown.html:146
-msgid "Search for items that can represent "
-msgstr "Procure por itens que podem representar "
-
-#: templates/authority.html:57 templates/create.html:214
-#: templates/locality.html:58 templates/subject.html:57 templates/type.html:57
-#: templates/unknown.html:149
-msgid "Search"
-msgstr "Procure"
-
-#: templates/authority.html:60 templates/create.html:217
-#: templates/locality.html:61 templates/subject.html:60 templates/type.html:60
-#: templates/unknown.html:152
-msgid "Select an option:"
-msgstr "Selecione uma opção:"
-
-#: templates/authority.html:66 templates/create.html:180
-#: templates/create.html:223 templates/locality.html:67
-#: templates/subject.html:66 templates/type.html:66 templates/unknown.html:158
-msgid "Cancel"
-msgstr "Cancelar"
-
-#: templates/authority.html:68 templates/create.html:225
-#: templates/locality.html:69 templates/subject.html:68 templates/type.html:68
-#: templates/unknown.html:160
-msgid "Add statement"
-msgstr "Adicionar declaração"
-
-#: templates/authority.html:123 templates/create.html:283
-#: templates/locality.html:124 templates/subject.html:123
-#: templates/type.html:123 templates/unknown.html:215
-msgid "Select one element"
-msgstr "Selecione um elemento"
-
-#: templates/authority.html:145 templates/create.html:305
-#: templates/create.html:326 templates/locality.html:146
-#: templates/subject.html:145 templates/type.html:145
-#: templates/unknown.html:237
-msgid "Statement inserted successfully!"
-msgstr "Declaração inserida com sucesso!"
 
 #: templates/base.html:20 templates/home.html:9 templates/topnavbar.html:2
 msgid "Homepage"
@@ -114,6 +47,7 @@ msgstr "WikiProjeto Leis Brasileiras"
 
 #: templates/base.html:40 templates/base.html:43 templates/error.html:17
 #: templates/error.html:20 templates/home.html:16 templates/home.html:19
+#: templates/reconciliate.html:18 templates/reconciliate.html:21
 msgid "Logotipo WikiProject Brazilian Laws"
 msgstr "Logotipo WikiProjeto Leis Brasileiras"
 
@@ -123,10 +57,12 @@ msgstr "projeto WikiProjeto Leis Brasileiras"
 
 #: templates/base.html:57
 #, python-format
-msgid "<i>WikiProject Brazilian Laws Legislation Importer</i> is an application "
+msgid ""
+"<i>WikiProject Brazilian Laws Legislation Importer</i> is an application "
 "developed in the context of the  <i><b>%(projeto)s</b></i> in Wikidata, "
 "with support of <b>WikiCite</b>."
-msgstr "<i>Importador de Legislação do WikiProjeto Leis Brasileiras</i> é um "
+msgstr ""
+"<i>Importador de Legislação do WikiProjeto Leis Brasileiras</i> é um "
 "aplicativo desenvolvido no contexto dos <i><b>%(projeto)s</b></i> no "
 "Wikidata, com suporte do <b>WikiCite</b>."
 
@@ -134,31 +70,30 @@ msgstr "<i>Importador de Legislação do WikiProjeto Leis Brasileiras</i> é um 
 msgid "Create item"
 msgstr "Criar item"
 
-#: templates/create.html:18 templates/unknown.html:18
+#: templates/create.html:18
 msgid "Title"
 msgstr "Título"
 
-#: templates/create.html:22 templates/reconciliate.html:33
-#: templates/type.html:14 templates/unknown.html:22
+#: templates/create.html:22 templates/reconciliate.html:41
+#: templates/type.html:16
 msgid "Document type"
 msgstr "Tipo de documento"
 
-#: templates/create.html:48 templates/unknown.html:44
+#: templates/create.html:48
 msgid "Date"
 msgstr "Data"
 
-#: templates/create.html:52 templates/unknown.html:48
+#: templates/create.html:52
 msgid "URN"
 msgstr "URN"
 
 #: templates/create.html:56 templates/locality.html:9
-#: templates/locality.html:14 templates/reconciliate.html:28
-#: templates/unknown.html:52
+#: templates/locality.html:16 templates/reconciliate.html:36
 msgid "Locality"
 msgstr "Localidade"
 
-#: templates/create.html:108 templates/reconciliate.html:38
-#: templates/subject.html:9 templates/subject.html:14 templates/unknown.html:96
+#: templates/create.html:108 templates/reconciliate.html:46
+#: templates/subject.html:9 templates/subject.html:16
 msgid "Subject"
 msgstr "Assunto"
 
@@ -166,63 +101,68 @@ msgstr "Assunto"
 msgid "Digest"
 msgstr "Ementa"
 
-#: templates/create.html:143
+#: templates/create.html:143 templates/create.html:149
 msgid "UPLOAD TO WIKIDATA"
 msgstr "CARREGAR PARA O WIKIDATA"
 
-#: templates/create.html:149
-msgid "This item doesn't exists yet in Wikidata."
-msgstr "Este item ainda não existe no Wikidata."
-
-#: templates/create.html:152
-#, python-format
-msgid "This item <a target='_blank' href='https://www.wikidata.org/wiki/%(qid)s'"
-" title='Item already exists'>already exists in Wikidata.</a>"
-msgstr "Este item <a target='_blank' href='https://www.wikidata.org/wiki/%(qid)s'"
-" title='Item já existe'>já existe no Wikidata.</a>"
-
-#: templates/create.html:154
-#, python-format
-msgid "Use <b>{{Cite Q|%(qid)s}}</b> to cite this item as reference on the "
-"English Wikipedia."
-msgstr "Use <b>{{Citar Q|%(qid)s}}</b> para citar este item como referência na "
-"Wikipédia em Português."
-
-#: templates/create.html:157
-msgid "<b>Some parameters might not be fully identified</b> and thus will"
-" be presented in red and with a \"Reconcile\" tag at the table."
-msgstr "<b>Alguns parâmetros podem não estar totalmente identificados</b> e, "
-"portanto, serão apresentados em vermelho e com a etiqueta \"Reconciliar\" na tabela."
+#: templates/create.html:156
+msgid "This item doesn't exists yet in Wikidata, or it was recently created."
+msgstr "Este item ainda não existe no Wikidata, ou foi criado recentemente."
 
 #: templates/create.html:158
-msgid "<b>To <i>wikidatify</i> the metadata</b>, click on \"Reconcile\" and "
-"search for an equivalent Wikidata entity. If you can't find it, select "
-"\"Not found/nonexistent\"."
-msgstr "<b>Para <i>wikidatificar</i> os metadados</b>, clique em \"Reconciliar\" e "
-"procure por um item Wikidata equivalente. Se você não conseguir encontrá-lo, selecione "
-"\"Não encontrado/não existente\"."
+msgid "Find on Wikidata"
+msgstr "Encontre no Wikidata"
 
-#: templates/create.html:159
-msgid "<b>To edit any reconciled metadata</b>, click on its link and "
-"search for a new entity value for the metadata."
-msgstr "<b>Para editar qualquer metadado reconciliado</b>, click em seu link e "
-"procure por um novo item Wikidata para este metadado."
+#: templates/create.html:162
+#, python-format
+msgid ""
+"This item <a target='_blank' href='https://www.wikidata.org/wiki/%(qid)s'"
+" title='Item already exists'>already exists in Wikidata.</a>"
+msgstr ""
+"Este item <a target='_blank' href='https://www.wikidata.org/wiki/%(qid)s'"
+" title='Item já existe'>já existe no Wikidata.</a>"
 
-#: templates/create.html:160
-msgid "<b>To create or update an item</b>, click in \"Upload to Wikidata\"."
-msgstr "<b>Para criar ou atualizar um item</b>, clique em \"Carregar para o Wikidata\"."
+#: templates/create.html:164
+#, python-format
+msgid ""
+"Use <b>{{Cite Q|%(qid)s}}</b> to cite this item as reference on the "
+"English Wikipedia."
+msgstr ""
+"Use <b>{{Citar Q|%(qid)s}}</b> para citar este item como referência na "
+"Wikipédia em Português."
+
+#: templates/create.html:167
+msgid ""
+"<b>Some parameters might not be fully identified</b> and thus will be "
+"presented in red and with a \"Reconcile\" tag at the table."
+msgstr ""
+"<b>Alguns parâmetros podem não estar totalmente identificados</b> e, "
+"portanto, serão apresentados em vermelho e com a etiqueta \"Reconciliar\""
+" na tabela."
 
 #: templates/create.html:168
-msgid "Authenticate"
-msgstr "Autenticar"
+msgid ""
+"<b>To <i>wikidatify</i> the metadata</b>, click on \"Reconcile\" and "
+"search for an equivalent Wikidata entity. If you can't find it, select "
+"\"Not found/nonexistent\"."
+msgstr ""
+"<b>Para <i>wikidatificar</i> os metadados</b>, clique em \"Reconciliar\" "
+"e procure por um item Wikidata equivalente. Se você não conseguir "
+"encontrá-lo, selecione \"Não encontrado/não existente\"."
 
-#: templates/create.html:174
-msgid "In order to reconcile a metadata, you need to log in."
-msgstr "Para reconciliar um metadado, você precisa realizar autenticar-se."
+#: templates/create.html:169
+msgid ""
+"<b>To edit any reconciled metadata</b>, click on its link and search for "
+"a new entity value for the metadata."
+msgstr ""
+"<b>Para editar qualquer metadado reconciliado</b>, click em seu link e "
+"procure por um novo item Wikidata para este metadado."
 
-#: templates/create.html:182 templates/create.html:186
-msgid "Log in"
-msgstr "Autenticar-se"
+#: templates/create.html:170
+msgid "<b>To create or update an item</b>, click in \"Upload to Wikidata\"."
+msgstr ""
+"<b>Para criar ou atualizar um item</b>, clique em \"Carregar para o "
+"Wikidata\"."
 
 #: templates/error.html:3 templates/error.html:31
 msgid "Something went wrong!"
@@ -238,40 +178,51 @@ msgstr "VOLTAR À PÁGINA INICIAL"
 
 #: templates/home.html:23
 msgid "Welcome to the <i>WikiProject Brazilian Laws Legislation Importer</i>"
-msgstr "Bem-vindo(a) ao <i>Importador de Legislação do WikiProjeto Leis Brasileiras</i>"
+msgstr ""
+"Bem-vindo(a) ao <i>Importador de Legislação do WikiProjeto Leis "
+"Brasileiras</i>"
 
 #: templates/home.html:28
 #, python-format
-msgid "This application was developed in the context of the "
+msgid ""
+"This application was developed in the context of the "
 "<i><b>%(projeto)s</b></i> with support of <b>WikiCite</b> to facilitate "
 "the process of importing metadata of Brazilian legislation into <b><i><a "
-"target=\"_blank\" href=\"https://www.wikidata.org/\">Wikidata</a></i></b>."
-msgstr "Esta aplicação foi desenvolvida no contexto do "
-"<i><b>%(projeto)s</b></i> com apoio do <b>WikiCite</b> para facilitar "
-"o processo de importação de legislação Brasileira para o <b><i><a "
-"target=\"_blank\" href=\"https://www.wikidata.org/\">Wikidata</a></i></b>."
+"target=\"_blank\" "
+"href=\"https://www.wikidata.org/\">Wikidata</a></i></b>."
+msgstr ""
+"Esta aplicação foi desenvolvida no contexto do <i><b>%(projeto)s</b></i> "
+"com apoio do <b>WikiCite</b> para facilitar o processo de importação de "
+"legislação Brasileira para o <b><i><a target=\"_blank\" "
+"href=\"https://www.wikidata.org/\">Wikidata</a></i></b>."
 
 #: templates/home.html:34
-msgid "To create an item or reconciliate metadata in this tool, you need to be "
+msgid ""
+"To create an item or reconciliate metadata in this tool, you need to be "
 "authenticated using your Wikimedia account. To do that, click on "
 "\"Authenticate\" on the menu at the top."
-msgstr "Para criar um item ou reconciliar metadados nesta ferramenta, você precisa "
-"autenticar-se usando a sua conta Wikimedia. Para fazer isso, clique em "
-"\"Autenticar-se"
+msgstr ""
+"Para criar um item ou reconciliar metadados nesta ferramenta, você "
+"precisa autenticar-se usando a sua conta Wikimedia. Para fazer isso, "
+"clique em \"Autenticar-se\" no menu no topo."
 
 #: templates/home.html:38
-msgid "You can begin the process of creating a new item by inserting a <i><a "
+msgid ""
+"You can begin the process of creating a new item by inserting a <i><a "
 "target=\"_blank\" href=\"https://www.lexml.gov.br/\">LeXML</a></i> URL "
 "into the field bellow."
-msgstr "Você pode começar o processo de criação de um novo item inserindo uma URL do "
-"<i><a target=\"_blank\" href=\"https://www.lexml.gov.br/\">LeXML</a></i> no "
-"campo abaixo:"
+msgstr ""
+"Você pode começar o processo de criação de um novo item inserindo uma URL"
+" do <i><a target=\"_blank\" "
+"href=\"https://www.lexml.gov.br/\">LeXML</a></i> no campo abaixo:"
 
 #: templates/home.html:41
-msgid "You can also click on \"Other tasks\" on the top to identify or create "
+msgid ""
+"You can also click on \"Other tasks\" on the top to identify or create "
 "metadata that were not identified by other users."
-msgstr "Você também pode clicar em \"Outras tarefas\" no topo para identificar ou "
-"criar metadados que não foram identificador por outros(as) usuários(as)."
+msgstr ""
+"Você também pode clicar em \"Outras tarefas\" no topo para identificar ou"
+" criar metadados que não foram identificador por outros(as) usuários(as)."
 
 #: templates/home.html:44
 msgid "Paste the URL"
@@ -281,23 +232,110 @@ msgstr "Cole a URL"
 msgid "Submit"
 msgstr "Submeter"
 
+#: templates/locality.html:17
+msgid ""
+"Locality in the context of this application means the geographic entity "
+"that an item has jurisdiction."
+msgstr ""
+"Localidade, no contexto dessa aplicação, representa a unidade geográfica "
+"que o item tem jurisdição."
+
+#: templates/modal.html:6 templates/topnavbar.html:14
+msgid "Authenticate"
+msgstr "Autenticar-se"
+
+#: templates/modal.html:12
+msgid "In order to reconcile a metadata, you need to log in."
+msgstr "Para reconciliar um metadado, você precisa realizar autenticar-se."
+
+#: templates/modal.html:18 templates/modal.html:60
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: templates/modal.html:20 templates/modal.html:24
+msgid "Log in"
+msgstr "Autenticar-se"
+
+#: templates/modal.html:35
+msgid "Reconciliation"
+msgstr "Reconciliação"
+
+#: templates/modal.html:41
+msgid ""
+"Search for a Wikidata entity corresponding to the term you are trying to "
+"reconcile."
+msgstr ""
+"Procure uma entidade Wikidata correspondente ao termo que você está "
+"tentando reconciliar."
+
+#: templates/modal.html:42
+msgid "If no corresponding Wikidata entity exists yet, please check the option"
+msgstr "Se nenhuma entidade Wikidata correspondente existir ainda, marque a opção"
+
+#: templates/modal.html:43 templates/modal.html:74 templates/modal.html:93
+#: templates/modal.html:120
+msgid "Not found/nonexistent"
+msgstr "Não encontrado/não existente"
+
+#: templates/modal.html:51
+msgid "Search"
+msgstr "Procure"
+
+#: templates/modal.html:54
+msgid "Select an option:"
+msgstr "Selecione uma opção:"
+
+#: templates/modal.html:62
+msgid "Add statement"
+msgstr "Adicionar declaração"
+
+#: templates/modal.html:73
+msgid "Search for items that can represent "
+msgstr "Procure por itens que podem representar "
+
+#: templates/modal.html:132
+msgid "Select one element"
+msgstr "Selecione um elemento"
+
+#: templates/modal.html:154 templates/modal.html:175
+msgid "Statement inserted successfully!"
+msgstr "Declaração inserida com sucesso!"
+
 #: templates/reconciliate.html:9
 msgid "Reconciliate"
 msgstr "Reconciliar"
 
-#: templates/reconciliate.html:15
-msgid "Select one of the categories of metadata to reconciliate unknown or "
+#: templates/reconciliate.html:24
+msgid ""
+"Some metadata are not yet registered on Wikidata, or have different "
+"labels there from the ones LeXML uses."
+msgstr ""
+"Alguns metadados não estão registrados no Wikidata, ou têm rótulos "
+"diferentes dos usados pelo LeXML."
+
+#: templates/reconciliate.html:25
+msgid ""
+"In such cases, users can mark this metadata as \"Not found/nonexistent\","
+" so others users can try to reconcile them."
+msgstr ""
+"Nestes casos, usuários(as) podem marcar este metadado como \"Não encontrado/não existente\","
+" para que outros(as) usuários(as) possam tentar reconciliá-los."
+
+#: templates/reconciliate.html:28
+msgid ""
+"Select one of the categories of metadata to reconciliate unknown or "
 "nonexistent values."
-msgstr "Selecione uma das categorias de metadados para reconciliar valores "
+msgstr ""
+"Selecione uma das categorias de metadados para reconciliar valores "
 "desconhecidos ou inexistentes."
+
+#: templates/subject.html:17
+msgid "Subjects in the context of this application means the keywords of an item."
+msgstr "Assuntos, no contexto dessa aplicação, representam as palavras-chave de um item."
 
 #: templates/topnavbar.html:3
 msgid "Other tasks"
 msgstr "Outras tarefas"
-
-#: templates/topnavbar.html:14
-msgid "Authenticate"
-msgstr "Autenticar-se"
 
 #: templates/topnavbar.html:16
 msgid "Menu"
@@ -307,10 +345,10 @@ msgstr "Menu"
 msgid "Document Type"
 msgstr "Tipo de Documento"
 
-#: templates/unknown.html:9
-msgid "Unknown"
-msgstr "Desconhecido"
+#: templates/type.html:17
+msgid ""
+"Document type in the context of this application means the instance of "
+"and item."
+msgstr ""
+"Tipo de documento, no contexto dessa aplicação, representa a instância de um item."
 
-#: templates/unknown.html:118
-msgid "Description"
-msgstr "Descrição"

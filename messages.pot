@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-04-09 17:37-0300\n"
+"POT-Creation-Date: 2021-04-10 02:09-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,92 +17,21 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.9.0\n"
 
-#: templates/authority.html:9 templates/authority.html:14
-#: templates/create.html:82 templates/reconciliate.html:23
-#: templates/unknown.html:74
+#: templates/authority.html:9 templates/authority.html:16
+#: templates/create.html:82 templates/reconciliate.html:31
 msgid "Authority"
 msgstr ""
 
-#: templates/authority.html:29 templates/create.html:40
-#: templates/create.html:74 templates/create.html:100 templates/create.html:126
-#: templates/locality.html:29 templates/subject.html:29 templates/type.html:29
-#: templates/unknown.html:36 templates/unknown.html:66
-#: templates/unknown.html:88 templates/unknown.html:110
-msgid "Reconcile"
-msgstr ""
-
-#: templates/authority.html:41 templates/create.html:197
-#: templates/locality.html:41 templates/subject.html:41 templates/type.html:41
-#: templates/unknown.html:133
-msgid "Reconciliation"
-msgstr ""
-
-#: templates/authority.html:46 templates/create.html:203
-#: templates/locality.html:47 templates/subject.html:46 templates/type.html:46
-#: templates/unknown.html:138
+#: templates/authority.html:17
 msgid ""
-"Search for a Wikidata entity corresponding to the term you are trying to "
-"reconcile."
+"Authority in the context of this application means the organization or "
+"institution that issued an item."
 msgstr ""
 
-#: templates/authority.html:47 templates/create.html:204
-#: templates/locality.html:48 templates/subject.html:47 templates/type.html:47
-#: templates/unknown.html:139
-msgid "If no corresponding Wikidata entity exists yet, please check the option"
-msgstr ""
-
-#: templates/authority.html:48 templates/authority.html:84
-#: templates/authority.html:111 templates/create.html:205
-#: templates/create.html:244 templates/create.html:271
-#: templates/locality.html:49 templates/locality.html:85
-#: templates/locality.html:112 templates/subject.html:48
-#: templates/subject.html:84 templates/subject.html:111 templates/type.html:48
-#: templates/type.html:84 templates/type.html:111 templates/unknown.html:140
-#: templates/unknown.html:176 templates/unknown.html:203
-msgid "Not found/nonexistent"
-msgstr ""
-
-#: templates/authority.html:54 templates/create.html:211
-#: templates/locality.html:55 templates/subject.html:54 templates/type.html:54
-#: templates/unknown.html:146
-msgid "Search for items that can represent "
-msgstr ""
-
-#: templates/authority.html:57 templates/create.html:214
-#: templates/locality.html:58 templates/subject.html:57 templates/type.html:57
-#: templates/unknown.html:149
-msgid "Search"
-msgstr ""
-
-#: templates/authority.html:60 templates/create.html:217
-#: templates/locality.html:61 templates/subject.html:60 templates/type.html:60
-#: templates/unknown.html:152
-msgid "Select an option:"
-msgstr ""
-
-#: templates/authority.html:66 templates/create.html:180
-#: templates/create.html:223 templates/locality.html:67
-#: templates/subject.html:66 templates/type.html:66 templates/unknown.html:158
-msgid "Cancel"
-msgstr ""
-
-#: templates/authority.html:68 templates/create.html:225
-#: templates/locality.html:69 templates/subject.html:68 templates/type.html:68
-#: templates/unknown.html:160
-msgid "Add statement"
-msgstr ""
-
-#: templates/authority.html:123 templates/create.html:283
-#: templates/locality.html:124 templates/subject.html:123
-#: templates/type.html:123 templates/unknown.html:215
-msgid "Select one element"
-msgstr ""
-
-#: templates/authority.html:145 templates/create.html:305
-#: templates/create.html:326 templates/locality.html:146
-#: templates/subject.html:145 templates/type.html:145
-#: templates/unknown.html:237
-msgid "Statement inserted successfully!"
+#: templates/authority.html:33 templates/create.html:40
+#: templates/create.html:74 templates/create.html:100 templates/create.html:126
+#: templates/locality.html:33 templates/subject.html:33 templates/type.html:33
+msgid "Reconcile"
 msgstr ""
 
 #: templates/base.html:20 templates/home.html:9 templates/topnavbar.html:2
@@ -115,6 +44,7 @@ msgstr ""
 
 #: templates/base.html:40 templates/base.html:43 templates/error.html:17
 #: templates/error.html:20 templates/home.html:16 templates/home.html:19
+#: templates/reconciliate.html:18 templates/reconciliate.html:21
 msgid "Logotipo WikiProject Brazilian Laws"
 msgstr ""
 
@@ -134,31 +64,30 @@ msgstr ""
 msgid "Create item"
 msgstr ""
 
-#: templates/create.html:18 templates/unknown.html:18
+#: templates/create.html:18
 msgid "Title"
 msgstr ""
 
-#: templates/create.html:22 templates/reconciliate.html:33
-#: templates/type.html:14 templates/unknown.html:22
+#: templates/create.html:22 templates/reconciliate.html:41
+#: templates/type.html:16
 msgid "Document type"
 msgstr ""
 
-#: templates/create.html:48 templates/unknown.html:44
+#: templates/create.html:48
 msgid "Date"
 msgstr ""
 
-#: templates/create.html:52 templates/unknown.html:48
+#: templates/create.html:52
 msgid "URN"
 msgstr ""
 
 #: templates/create.html:56 templates/locality.html:9
-#: templates/locality.html:14 templates/reconciliate.html:28
-#: templates/unknown.html:52
+#: templates/locality.html:16 templates/reconciliate.html:36
 msgid "Locality"
 msgstr ""
 
-#: templates/create.html:108 templates/reconciliate.html:38
-#: templates/subject.html:9 templates/subject.html:14 templates/unknown.html:96
+#: templates/create.html:108 templates/reconciliate.html:46
+#: templates/subject.html:9 templates/subject.html:16
 msgid "Subject"
 msgstr ""
 
@@ -166,61 +95,53 @@ msgstr ""
 msgid "Digest"
 msgstr ""
 
-#: templates/create.html:143
+#: templates/create.html:143 templates/create.html:149
 msgid "UPLOAD TO WIKIDATA"
 msgstr ""
 
-#: templates/create.html:149
-msgid "This item doesn't exists yet in Wikidata."
+#: templates/create.html:156
+msgid "This item doesn't exists yet in Wikidata, or it was recently created."
 msgstr ""
 
-#: templates/create.html:152
+#: templates/create.html:158
+msgid "Find on Wikidata"
+msgstr ""
+
+#: templates/create.html:162
 #, python-format
 msgid ""
 "This item <a target='_blank' href='https://www.wikidata.org/wiki/%(qid)s'"
 " title='Item already exists'>already exists in Wikidata.</a>"
 msgstr ""
 
-#: templates/create.html:154
+#: templates/create.html:164
 #, python-format
 msgid ""
 "Use <b>{{Cite Q|%(qid)s}}</b> to cite this item as reference on the "
 "English Wikipedia."
 msgstr ""
 
-#: templates/create.html:157
+#: templates/create.html:167
 msgid ""
-"<b>Some parameters might not be fully identified</b> and thus will"
-" be presented in red and with a \"Reconcile\" tag at the table."
+"<b>Some parameters might not be fully identified</b> and thus will be "
+"presented in red and with a \"Reconcile\" tag at the table."
 msgstr ""
 
-#: templates/create.html:158
+#: templates/create.html:168
 msgid ""
 "<b>To <i>wikidatify</i> the metadata</b>, click on \"Reconcile\" and "
 "search for an equivalent Wikidata entity. If you can't find it, select "
 "\"Not found/nonexistent\"."
 msgstr ""
 
-#: templates/create.html:159
+#: templates/create.html:169
 msgid ""
-"<b>To edit any reconciled metadata</b>, click on its link and "
-"search for a new entity value for the metadata."
+"<b>To edit any reconciled metadata</b>, click on its link and search for "
+"a new entity value for the metadata."
 msgstr ""
 
-#: templates/create.html:160
+#: templates/create.html:170
 msgid "<b>To create or update an item</b>, click in \"Upload to Wikidata\"."
-msgstr ""
-
-#: templates/create.html:168
-msgid "Authenticate"
-msgstr ""
-
-#: templates/create.html:174
-msgid "In order to reconcile a metadata, you need to log in."
-msgstr ""
-
-#: templates/create.html:182 templates/create.html:186
-msgid "Log in"
 msgstr ""
 
 #: templates/error.html:3 templates/error.html:31
@@ -277,22 +198,99 @@ msgstr ""
 msgid "Submit"
 msgstr ""
 
+#: templates/locality.html:17
+msgid ""
+"Locality in the context of this application means the geographic entity "
+"that an item has jurisdiction."
+msgstr ""
+
+#: templates/modal.html:6 templates/topnavbar.html:14
+msgid "Authenticate"
+msgstr ""
+
+#: templates/modal.html:12
+msgid "In order to reconcile a metadata, you need to log in."
+msgstr ""
+
+#: templates/modal.html:18 templates/modal.html:60
+msgid "Cancel"
+msgstr ""
+
+#: templates/modal.html:20 templates/modal.html:24
+msgid "Log in"
+msgstr ""
+
+#: templates/modal.html:35
+msgid "Reconciliation"
+msgstr ""
+
+#: templates/modal.html:41
+msgid ""
+"Search for a Wikidata entity corresponding to the term you are trying to "
+"reconcile."
+msgstr ""
+
+#: templates/modal.html:42
+msgid "If no corresponding Wikidata entity exists yet, please check the option"
+msgstr ""
+
+#: templates/modal.html:43 templates/modal.html:74 templates/modal.html:93
+#: templates/modal.html:120
+msgid "Not found/nonexistent"
+msgstr ""
+
+#: templates/modal.html:51
+msgid "Search"
+msgstr ""
+
+#: templates/modal.html:54
+msgid "Select an option:"
+msgstr ""
+
+#: templates/modal.html:62
+msgid "Add statement"
+msgstr ""
+
+#: templates/modal.html:73
+msgid "Search for items that can represent "
+msgstr ""
+
+#: templates/modal.html:132
+msgid "Select one element"
+msgstr ""
+
+#: templates/modal.html:154 templates/modal.html:175
+msgid "Statement inserted successfully!"
+msgstr ""
+
 #: templates/reconciliate.html:9
 msgid "Reconciliate"
 msgstr ""
 
-#: templates/reconciliate.html:15
+#: templates/reconciliate.html:24
+msgid ""
+"Some metadata are not yet registered on Wikidata, or have different "
+"labels there from the ones LeXML uses."
+msgstr ""
+
+#: templates/reconciliate.html:25
+msgid ""
+"In such cases, users can mark this metadata as \"Not found/nonexistent\","
+" so others users can try to reconcile them."
+msgstr ""
+
+#: templates/reconciliate.html:28
 msgid ""
 "Select one of the categories of metadata to reconciliate unknown or "
 "nonexistent values."
 msgstr ""
 
-#: templates/topnavbar.html:3
-msgid "Other tasks"
+#: templates/subject.html:17
+msgid "Subjects in the context of this application means the keywords of an item."
 msgstr ""
 
-#: templates/topnavbar.html:14
-msgid "Authenticate"
+#: templates/topnavbar.html:3
+msgid "Other tasks"
 msgstr ""
 
 #: templates/topnavbar.html:16
@@ -303,11 +301,9 @@ msgstr ""
 msgid "Document Type"
 msgstr ""
 
-#: templates/unknown.html:9
-msgid "Unknown"
-msgstr ""
-
-#: templates/unknown.html:118
-msgid "Description"
+#: templates/type.html:17
+msgid ""
+"Document type in the context of this application means the instance of "
+"and item."
 msgstr ""
 

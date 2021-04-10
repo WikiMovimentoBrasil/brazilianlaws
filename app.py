@@ -155,7 +155,19 @@ def home():
 def reconciliate():
     lang = get_locale()
     username = get_username()
-    return render_template('reconciliate.html', lang=lang, username=username)
+    with open(os.path.join(app.static_folder, 'unknown.json'), encoding="utf-8") as file:
+        unknown_values = json.load(file)
+    type_size = unknown_values["type"].__len__()
+    authority_size = unknown_values["authority"].__len__()
+    locality_size = unknown_values["locality"].__len__()
+    subject_size = unknown_values["subject"].__len__()
+    return render_template('reconciliate.html',
+                           lang=lang,
+                           username=username,
+                           type_size=type_size,
+                           authority_size=authority_size,
+                           locality_size=locality_size,
+                           subject_size=subject_size)
 
 
 @app.route('/reconciliate/<cat>')
@@ -393,7 +405,8 @@ def remove_redundant_statements(api_code, item):
     if "claims" in json_data:
         claims = json_data["claims"]
         for index, value in enumerate(claims):
-            if not (value["mainsnak"]["property"] in qid_properties and ("Q" + str(value["mainsnak"]["datavalue"]["value"]["numeric-id"])) in qids_list):
+            if not (value["mainsnak"]["property"] in qid_properties and (
+                    "Q" + str(value["mainsnak"]["datavalue"]["value"]["numeric-id"])) in qids_list):
                 new_claims.append(value)
         json_data["claims"] = new_claims
 
