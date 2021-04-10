@@ -1,8 +1,1 @@
-{
-  "name": "type-table",
-  "title": "Document type lexicon",
-  "Legislação::Decreto Legislativo": "Q2703920",
-  "Legislação::Lei": "Q820655",
-  "Proposições Legislativas::Projeto de Lei": "Q686822",
-  "Jurisprudência::Acórdão": "Q9659"
-}
+{"name": "type-table", "title": "Document type lexicon", "Legislação::Decreto Legislativo": "Q2703920", "Legislação::Lei": "Q820655", "Proposições Legislativas::Projeto de Lei": "Q686822", "Jurisprudência::Acórdão": "Q9581877", "Legislação::Portaria": "Q106377224"}
