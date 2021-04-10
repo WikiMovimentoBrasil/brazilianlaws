@@ -1,0 +1,184 @@
+<div class="w3-container">
+    <div class="modal" id="authenticate">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">{{ _("Authenticate") }}</h3>
+                    <button type="button" class="close" data-dismiss="modal" style="font-size:125%; ">&times;
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p style="font-size: 100%">
+                        {{ _("In order to reconcile a metadata, you need to log in.") }}<br>
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                            style="font-size:100%; ">
+                        {{ _("Cancel") }}
+                    </button>
+                    <a title="{{ _('Log in') }}"
+                       href="{{ url_for('login', next=request.script_root + request.full_path) }}">
+                        <button type="button" class="btn btn-primary"
+                                style="font-size:100%; background-color: #029c36">
+                            {{ _("Log in") }}
+                        </button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="addModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">{{ _("Reconciliation") }}</h3>
+                    <button type="button" class="close" data-dismiss="modal" style="font-size:125%; ">&times;
+                    </button>
+                </div>
+                <div class="modal-body" id="modalbody">
+                    <p style="font-size: 100%">
+                        {{ _("Search for a Wikidata entity corresponding to the term you are trying to reconcile.") }}
+                        {{ _("If no corresponding Wikidata entity exists yet, please check the option") }}
+                        <i>'{{ _("Not found/nonexistent") }}'</i>.
+                    </p>
+                    <br>
+                    <div id="term" style="text-align: center;font-size: 125%"></div>
+                    <br>
+                    <label for="search_field" class="col-form-label">
+                        <div id="search_class"></div>
+                    </label>
+                    <input type="search" class="form-control" placeholder="{{ _('Search') }}" id="search_field"
+                           style="font-size: 125%">
+                    <br>
+                    <span id="select_instruction" style="font-size: 100%">{{ _("Select an option:") }}</span><br>
+                    <form id="search_results">
+                    </form>
+                </div>
+                <div class="modal-footer" id="secondModal">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                            style="font-size:100%; ">{{ _("Cancel") }}</button>
+                    <button type="submit" id="addstatement" class="btn btn-primary"
+                            style="font-size:100%; background-color: #029c36;border: 0px">{{ _("Add statement") }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $('#addModal').on('show.bs.modal', function (event) {
+        var term = $(event.relatedTarget).attr('data-label');
+        var qid = $(event.relatedTarget).attr('data-qid');
+        var search_class = $(event.relatedTarget).attr('data-search_class');
+        var instruction = "{{ _("Search for items that can represent ") }}";
+        var unknown = "{{ _('Not found/nonexistent') }}";
+
+        $(this).find("#search_field").val(null);
+        $(this).find("#search_results").empty();
+        $(this).find("#search_results").append('<input type="radio" id="unknown" name="claim_option" data-label="' + term + '" data-search_class="' + search_class + '" value="unknown"> ' +
+            '<label for="unknown" style="font-size: 100%"><i>' + unknown + '</i></label><br>');
+        $(this).find("#secondModal #addstatement").attr('data-label', term);
+        $(this).find("#secondModal #addstatement").attr('data-search_class', search_class);
+        $(this).find("#modalbody #term").empty();
+        if (qid) {
+            $(this).find("#modalbody #term").append('<a target="_blank" title="' + term + '" href="https://www.wikidata.org/wiki/' + qid + '">' + term + '</a>');
+        } else {
+            $(this).find("#modalbody #term").append('<span style="color: red">' + term + '</span>');
+        }
+        $(this).find("#modalbody #search_class").empty();
+        $(this).find("#modalbody #search_class").append(instruction + '<i>' + term + '</i>');
+    })
+
+    $("#search_field").bind('keyup', function (event) {
+        var unknown = "{{ _('Not found/nonexistent') }}";
+        var search_class = $('#addstatement').attr('data-search_class');
+        var term = $('#addstatement').attr('data-label');
+        if ($(this)[0].value) {
+            search();
+        } else {
+            $("#search_results").empty();
+            $("#search_results").append('<input type="radio" id="unknown" name="claim_option" data-label="' + term + '" data-search_class="' + search_class + '" value="unknown"> ' +
+                '<label for="unknown" style="font-size: 100%"><i>' + unknown + '</i></label><br>');
+        }
+    });
+
+    function search() {
+        var input = $('#search_field')[0].value;
+        var search_class = $('#addstatement').attr('data-search_class');
+        var term = $('#addstatement').attr('data-label');
+        var data = {'term': input};
+
+        console.log(input);
+        $.ajax({
+            url: "/search",
+            type: "POST",
+            data: JSON.stringify(data),
+            contentType: "application/json",
+            dataType: "json",
+
+            success: function (response) {
+                var unknown = "{{ _('Not found/nonexistent') }}";
+                $("#search_results").empty()
+
+                $("#search_results").append('<input type="radio" id="unknown" name="claim_option" data-label="' + term + '" data-search_class="' + search_class + '" value="unknown"> ' +
+                    '<label for="unknown" style="font-size: 100%"><i>' + unknown + '</i></label><br>');
+
+                for (var i = 0; i < (Math.min(15, response.length)); i++) {
+                    $("#search_results").append('<input type="radio" id="' + response[i]["qid"] + '" name="claim_option" data-label="' + term + '" data-search_class="' + search_class + '" value="' + response[i]["qid"] + '"> ' +
+                        '<label for="' + response[i]["qid"] + '" style="font-size: 100%"><b style="color: 029c36;font-size: 125%">' + response[i]["label"] + ' (' + response[i]["qid"] + ')</b></label>: ' + response[i]["descr"] + '<br>');
+                }
+            },
+            error: function () {
+                alert('{{_("Select one element")}}');
+            }
+        });
+    };
+
+    $('#addstatement').on('click', function () {
+        var claim = $("input[name='claim_option']:checked").val();
+        var category = $("input[name='claim_option']:checked").attr('data-search_class');
+        var term = $("input[name='claim_option']:checked").attr('data-label');
+        var data = {
+            'term': term,
+            'category': category,
+            'qid': claim,
+        }
+        $.ajax({
+            url: "/add_stat",
+            type: "POST",
+            data: JSON.stringify(data),
+            contentType: "application/json",
+            dataType: "json",
+
+            success: function () {
+                alert("{{ _('Statement inserted successfully!') }}");
+                window.location.reload();
+                $('#addModal').modal('hide');
+            },
+            error: function () {
+                alert("Ocorreu algum erro!");
+            }
+        });
+    });
+
+    $('#upload_to_wikidata').on('click', function (event) {
+        var data = $('#upload_to_wikidata')[0].value;
+        var qid = $('#upload_to_wikidata').attr('data-qid');
+        $.ajax({
+            url: "/post",
+            type: "POST",
+            data: JSON.stringify({"data": data, "qid": qid}),
+            contentType: "application/json",
+            dataType: "json",
+
+            success: function () {
+                alert("{{ _('Statement inserted successfully!') }}");
+                window.location.reload();
+                $('#addModal').modal('hide');
+            },
+            error: function () {
+                alert("Ocorreu algum erro!");
+            }
+        });
+    });
+</script>
