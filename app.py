@@ -103,7 +103,9 @@ def set_locale():
     lang = request.args.get('lang')
 
     session["lang"] = lang
-    return redirect(next_page)
+    redirected = redirect(next_page)
+    redirected.delete_cookie('session', '/add_entry/https://www.lexml.gov.br/urn')
+    return redirected
 
 
 @app.errorhandler(400)
