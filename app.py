@@ -103,7 +103,9 @@ def set_locale():
     lang = request.args.get('lang')
 
     session["lang"] = lang
-    return redirect(next_page)
+    redirected = redirect(next_page)
+    redirected.delete_cookie('session', '/add_entry/https://www.lexml.gov.br/urn')
+    return redirected
 
 
 @app.errorhandler(400)
@@ -359,6 +361,7 @@ def add_statement():
             with open(os.path.join(app.static_folder, "unknown.json"), encoding="utf-8") as file:
                 lexicon = json.load(file)
                 lexicon[data['category'].lower()].append(term)
+                lexicon = list(dict.fromkeys(lexicon))
             with open(os.path.join(app.static_folder, "unknown.json"), 'w', encoding="utf-8") as file:
                 json.dump(lexicon, file, ensure_ascii=False)
 
