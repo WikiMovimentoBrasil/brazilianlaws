@@ -361,6 +361,7 @@ def add_statement():
             with open(os.path.join(app.static_folder, "unknown.json"), encoding="utf-8") as file:
                 lexicon = json.load(file)
                 lexicon[data['category'].lower()].append(term)
+                lexicon = list(dict.fromkeys(lexicon))
             with open(os.path.join(app.static_folder, "unknown.json"), 'w', encoding="utf-8") as file:
                 json.dump(lexicon, file, ensure_ascii=False)
 
